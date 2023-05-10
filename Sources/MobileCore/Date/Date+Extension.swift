@@ -25,4 +25,8 @@ public extension Date {
     func day(_ calendar: Calendar) -> Int {
         dateComponents([.day]).day!
     }
+    
+    func weekday(_ calendar: Calendar) -> Int {
+        dateComponents([.weekday]).weekday!
+    }
 }
