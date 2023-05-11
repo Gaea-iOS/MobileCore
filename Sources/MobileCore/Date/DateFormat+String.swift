@@ -7,6 +7,8 @@
 
 import Foundation
 
+extension String: DateFormatCompatible {}
+
 /**
  Year
  y    2019    Year with no padding
