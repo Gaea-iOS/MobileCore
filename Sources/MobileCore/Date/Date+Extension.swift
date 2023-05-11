@@ -14,19 +14,19 @@ public extension Date {
 }
 
 public extension Date {
-    func year(_ calendar: Calendar) -> Int {
+    func year(_ calendar: Calendar = .current) -> Int {
         dateComponents([.year]).year!
     }
     
-    func month(_ calendar: Calendar) -> Int {
+    func month(_ calendar: Calendar = .current) -> Int {
         dateComponents([.month]).month!
     }
     
-    func day(_ calendar: Calendar) -> Int {
+    func day(_ calendar: Calendar = .current) -> Int {
         dateComponents([.day]).day!
     }
     
-    func weekday(_ calendar: Calendar) -> Int {
+    func weekday(_ calendar: Calendar = .current) -> Int {
         dateComponents([.weekday]).weekday!
     }
 }
