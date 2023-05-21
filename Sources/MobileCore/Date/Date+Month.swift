@@ -53,7 +53,7 @@ public extension Date {
 }
 
 public extension Date {
-    func monthDatesGroupInWeek(in calendar: Calendar = .current) -> [[Date]] {
+    func monthDatesGroupInWeek(in calendar: Calendar = .current) -> [Date] {
         let startOfMonth = startOfMonth(in: calendar)
         let endOfMonth = endOfMonth(in: calendar)
         
@@ -71,20 +71,21 @@ public extension Date {
 
         let dates = prefixDates + monthDates(in: calendar) + postfixDates
         precondition(dates.count % 7 == 0)
-
-        let numberOfGroup = dates.count / 7
-        
-        return (0..<numberOfGroup).map {
-            Array(dates[($0 * 7)...($0 * 7 + 6)])
-        }
+        return dates
+//
+//        let numberOfGroup = dates.count / 7
+//
+//        return (0..<numberOfGroup).map {
+//            Array(dates[($0 * 7)...($0 * 7 + 6)])
+//        }
     }
     
-    func previousMonthDatesGroupInWeek(in calendar: Calendar = .current) -> [[Date]] {
+    func previousMonthDatesGroupInWeek(in calendar: Calendar = .current) -> [Date] {
         let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: self)!
         return previousMonthDate.monthDatesGroupInWeek(in: calendar)
     }
     
-    func nextMonthDatesGroupInWeek(in calendar: Calendar = .current) -> [[Date]] {
+    func nextMonthDatesGroupInWeek(in calendar: Calendar = .current) -> [Date] {
         let previousMonthDate = calendar.date(byAdding: .month, value: 1, to: self)!
         return previousMonthDate.monthDatesGroupInWeek(in: calendar)
     }
