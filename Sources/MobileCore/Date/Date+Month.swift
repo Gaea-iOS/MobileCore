@@ -64,10 +64,13 @@ public extension Date {
             }
         
         let endWeekday = endOfMonth.weekday(in: calendar)
-        let postfixDates = ((endWeekday + 1)...7)
-            .map {
-                calendar.date(byAdding: .day, value: $0 - endWeekday, to: endOfMonth)!
-            }
+        var postfixDates: [Date] = []
+        if endWeekday < 7 {
+            postfixDates = ((endWeekday + 1)...7)
+                .map {
+                    calendar.date(byAdding: .day, value: $0 - endWeekday, to: endOfMonth)!
+                }
+        }
 
         let dates = prefixDates + monthDates(in: calendar) + postfixDates
         precondition(dates.count % 7 == 0)
