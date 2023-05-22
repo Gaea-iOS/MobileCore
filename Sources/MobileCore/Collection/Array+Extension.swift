@@ -16,7 +16,7 @@ public extension Array {
             return Array(self[indexRange])
         }
         
-        if count & number != 0 {
+        if count % number != 0 {
             let restIndexRange = (number * numberOfGroup)..<count
             let rest = Array(self[restIndexRange])
             result.append(rest)
