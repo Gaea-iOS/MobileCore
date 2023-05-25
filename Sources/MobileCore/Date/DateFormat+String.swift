@@ -30,7 +30,8 @@ public extension DateFormat where Base == String {
 public extension DateFormat where Base == String {
     static let monthWithoutPadding = "M"
     static let monthWithPadding = "MM"
-    static let monthWithFullName = "MMMM"
+    static let monthNameInShortHand = "MM"
+    static let monthFullName = "MMMM"
 }
 
 
@@ -50,8 +51,8 @@ public extension DateFormat where Base == String {
  EEEE    Friday    Full name of the day
  */
 public extension DateFormat where Base == String {
-    static let weekOfTheDayShortHand = "E"
-    static let weekOfTheDayFullName = "EEEE"
+    static let weekdayNameInShortHand = "E"
+    static let weekdayFullName = "EEEE"
 }
 
 /**
@@ -102,7 +103,7 @@ public extension DateFormat where Base == String {
  */
 public extension DateFormat where Base == String {
     static let timezoneWith3Letters = "zzz"
-    static let timezoneWholeName = "zzz"
+    static let timezoneFullName = "zzz"
     static let timezoneInRFC822GMTFormat = "Z"
     static let timezoneInISO8601Format = "ZZZZZ"
 }
