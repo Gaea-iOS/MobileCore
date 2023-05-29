@@ -30,7 +30,7 @@ public extension DateFormat where Base == String {
 public extension DateFormat where Base == String {
     static let monthWithoutPadding = "M"
     static let monthWithPadding = "MM"
-    static let monthNameInShortHand = "MM"
+    static let monthNameInShortHand = "MMM"
     static let monthFullName = "MMMM"
 }
 
