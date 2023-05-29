@@ -8,7 +8,15 @@
 import Foundation
 
 public extension Date {
-    func isSameDay(as date: Date, in calendar: Calendar = .current) -> Bool {
+    func isInSameDay(as date: Date, in calendar: Calendar = .current) -> Bool {
         calendar.isDate(date, inSameDayAs: self)
+    }
+    
+    func isInSameMonth(as date: Date, in calendar: Calendar = .current) -> Bool {
+        calendar.isDate(date, equalTo: self, toGranularity: .month)
+    }
+    
+    func isInSameYear(as date: Date, in calendar: Calendar = .current) -> Bool {
+        calendar.isDate(date, equalTo: self, toGranularity: .year)
     }
 }
