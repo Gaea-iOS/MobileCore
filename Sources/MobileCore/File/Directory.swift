@@ -11,11 +11,11 @@ public protocol Directory {
     func appendingPathComponent(_ path: String) -> URL
 }
 
-final class DocumentDirectory: Directory {
+public final class DocumentDirectory: Directory {
     private let fileManager: FileManager
     private let subFolder: String?
 
-    init(
+    public init(
         fileManager: FileManager = .default,
         subFolder: String? = nil
     ) {
@@ -33,15 +33,15 @@ final class DocumentDirectory: Directory {
         }
     }
 
-    func appendingPathComponent(_ path: String) -> URL {
+    public func appendingPathComponent(_ path: String) -> URL {
         url.appendingPathComponent(path)
     }
 
-    var isExist: Bool {
+    public var isExist: Bool {
         fileManager.fileExists(atPath: url.path)
     }
 
-    func create() throws {
+    public func create() throws {
         try fileManager.createDirectory(atPath: url.path, withIntermediateDirectories: true)
     }
 }
