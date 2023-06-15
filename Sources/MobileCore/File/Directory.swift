@@ -4,7 +4,7 @@
 
 import Foundation
 
-protocol Directory {
+public protocol Directory {
     var isExist: Bool { get }
 
     func create() throws

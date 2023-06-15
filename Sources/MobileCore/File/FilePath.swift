@@ -4,11 +4,16 @@
 
 import Foundation
 
-struct FilePath {
+public struct FilePath {
     let directory: Directory
     let fileName: String
+    
+    public init(directory: Directory, fileName: String) {
+        self.directory = directory
+        self.fileName = fileName
+    }
 
-    var url: URL {
+    public var url: URL {
         directory.appendingPathComponent(fileName)
     }
 }
