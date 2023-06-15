@@ -37,3 +37,23 @@ public final class UserDefaultsCache<T>: Caching {
         }
     }
 }
+
+public extension UserDefaultsCache where T: Codable {
+    convenience init?(
+        suiteName: String,
+        cacheKey: String,
+        serializer: any Serializer<T> = EncodableSerializer<T>(),
+        deserializer: any Deserializer<T> = DecodableDeserializer<T>()
+    ) {
+        guard let userDefaults = UserDefaults(suiteName: suiteName) else {
+            return nil
+        }
+        
+        self.init(
+            userDefaults: userDefaults,
+            cacheKey: cacheKey,
+            serializer: serializer,
+            deserializer: deserializer
+        )
+    }
+}
