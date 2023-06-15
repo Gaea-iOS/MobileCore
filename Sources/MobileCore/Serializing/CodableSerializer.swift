@@ -10,12 +10,16 @@ typealias Decode<T: Decodable> = (Data) throws -> T
 public final class EncodableSerializer<Input>: Serializer where Input: Encodable {
     private let encode: Encode<Input>
 
-    init(encode: @escaping Encode<Input> = JSONEncoder().encode) {
+    init(encode: @escaping Encode<Input>) {
         self.encode = encode
     }
 
     public func serialize(_ input: Input) throws -> Data {
         try encode(input)
+    }
+    
+    public convenience init(encoder: JSONEncoder = .init()) {
+        self.init(encode: encoder.encode(_:))
     }
 }
 
@@ -28,19 +32,15 @@ extension JSONDecoder {
 public final class DecodableDeserializer<Output>: Deserializer where Output: Decodable {
     private let decode: Decode<Output>
 
-    init(decode: @escaping Decode<Output> = JSONDecoder().decode(from:)) {
+    init(decode: @escaping Decode<Output>) {
         self.decode = decode
+    }
+    
+    public convenience init(decoder: JSONDecoder = .init()) {
+        self.init(decode: decoder.decode(from:))
     }
 
     public func deserialize(_ data: Data) throws -> Output {
         try decode(data)
     }
-}
-
-public func encodableSerializer<T: Encodable>(encoder: JSONEncoder = .init()) -> EncodableSerializer<T> {
-    EncodableSerializer<T>(encode: encoder.encode(_:))
-}
-
-public func decodableDeserializer<T: Decodable>(decoder: JSONDecoder = .init()) -> DecodableDeserializer<T> {
-    DecodableDeserializer<T>(decode: decoder.decode(from:))
 }

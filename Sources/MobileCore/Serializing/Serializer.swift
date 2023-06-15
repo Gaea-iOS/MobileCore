@@ -14,27 +14,27 @@ public protocol Deserializer<Output> {
     func deserialize(_ data: Data) throws -> Output
 }
 
-public protocol PairedSerializer<Value>: Serializer, Deserializer where Input == Value, Output == Value {
-    associatedtype Value
-}
-
-public final class AnyPairedSerializer<Value>: PairedSerializer {
-    private let serializer: any Serializer<Value>
-    private let deserializer: any Deserializer<Value>
-
-    public init(
-        serializer: some Serializer<Value>,
-        deserializer: some Deserializer<Value>
-    ) {
-        self.serializer = serializer
-        self.deserializer = deserializer
-    }
-
-    public func serialize(_ input: Value) throws -> Data {
-        try serializer.serialize(input)
-    }
-
-    public func deserialize(_ data: Data) throws -> Value {
-        try deserializer.deserialize(data)
-    }
-}
+//public protocol PairedSerializer<Value>: Serializer, Deserializer where Input == Value, Output == Value {
+//    associatedtype Value
+//}
+//
+//public final class AnyPairedSerializer<Value>: PairedSerializer {
+//    private let serializer: any Serializer<Value>
+//    private let deserializer: any Deserializer<Value>
+//
+//    public init(
+//        serializer: some Serializer<Value>,
+//        deserializer: some Deserializer<Value>
+//    ) {
+//        self.serializer = serializer
+//        self.deserializer = deserializer
+//    }
+//
+//    public func serialize(_ input: Value) throws -> Data {
+//        try serializer.serialize(input)
+//    }
+//
+//    public func deserialize(_ data: Data) throws -> Value {
+//        try deserializer.deserialize(data)
+//    }
+//}
