@@ -4,25 +4,25 @@
 
 import Foundation
 
-protocol Serializer<Input> {
+public protocol Serializer<Input> {
     associatedtype Input
     func serialize(_ input: Input) throws -> Data
 }
 
-protocol Deserializer<Output> {
+public protocol Deserializer<Output> {
     associatedtype Output
     func deserialize(_ data: Data) throws -> Output
 }
 
-protocol PairedSerializer<Value>: Serializer, Deserializer where Input == Value, Output == Value {
+public protocol PairedSerializer<Value>: Serializer, Deserializer where Input == Value, Output == Value {
     associatedtype Value
 }
 
-final class AnyPairedSerializer<Value>: PairedSerializer {
+public final class AnyPairedSerializer<Value>: PairedSerializer {
     private let serializer: any Serializer<Value>
     private let deserializer: any Deserializer<Value>
 
-    init(
+    public init(
         serializer: some Serializer<Value>,
         deserializer: some Deserializer<Value>
     ) {
@@ -30,11 +30,11 @@ final class AnyPairedSerializer<Value>: PairedSerializer {
         self.deserializer = deserializer
     }
 
-    func serialize(_ input: Value) throws -> Data {
+    public func serialize(_ input: Value) throws -> Data {
         try serializer.serialize(input)
     }
 
-    func deserialize(_ data: Data) throws -> Value {
+    public func deserialize(_ data: Data) throws -> Value {
         try deserializer.deserialize(data)
     }
 }

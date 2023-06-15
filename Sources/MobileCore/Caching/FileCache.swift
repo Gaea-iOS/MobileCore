@@ -4,23 +4,23 @@
 
 import Foundation
 
-final class FileCache<T>: Caching {
+public final class FileCache<T>: Caching {
     private let url: URL
     private let serializer: any PairedSerializer<T>
 
-    init(file url: URL,
+    public init(file url: URL,
          serializer: some PairedSerializer<T>)
     {
         self.url = url
         self.serializer = serializer
     }
 
-    func save(_ value: T) throws {
+    public func save(_ value: T) throws {
         let data = try serializer.serialize(value)
         try data.write(to: url)
     }
 
-    func load() throws -> T? {
+    public func load() throws -> T? {
         let data = try Data(contentsOf: url)
         let value = try serializer.deserialize(data)
         return value

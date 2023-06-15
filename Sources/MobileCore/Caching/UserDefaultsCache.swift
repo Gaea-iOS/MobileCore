@@ -4,12 +4,12 @@
 
 import Foundation
 
-final class UserDefaultsCache<T>: Caching {
+public final class UserDefaultsCache<T>: Caching {
     private let userDefaults: UserDefaults
     private let cacheKey: String
     private let serializer: any PairedSerializer<T>
 
-    init(userDefaults: UserDefaults = .standard,
+    public init(userDefaults: UserDefaults = .standard,
          cacheKey: String,
          serializer: some PairedSerializer<T>)
     {
@@ -18,12 +18,12 @@ final class UserDefaultsCache<T>: Caching {
         self.serializer = serializer
     }
 
-    func save(_ value: T) throws {
+    public func save(_ value: T) throws {
         let data = try serializer.serialize(value)
         userDefaults.set(data, forKey: cacheKey)
     }
 
-    func load() throws -> T? {
+    public func load() throws -> T? {
         if let data = userDefaults.data(forKey: cacheKey) {
             let value = try serializer.deserialize(data)
             return value
