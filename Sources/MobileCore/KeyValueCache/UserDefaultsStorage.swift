@@ -22,6 +22,21 @@ public final class UserDefaultsStorage: CodableKeyValueStorage {
         self.serializer = serializer
         self.deserializer = deserializer
     }
+    
+    convenience init?(
+        suiteName: String,
+        serializer: AnyEncodableSerializer = JSONEncoder(),
+        deserializer: AnyDecodableDeserializer = JSONDecoder()
+    ) {
+        guard let userDefaults = UserDefaults(suiteName: suiteName) else {
+            return nil
+        }
+        self.init(
+            userDefaults: userDefaults,
+            serializer: serializer,
+            deserializer: deserializer
+        )
+    }
 
     public func save<Value>(_ value: Value?, forKey key: CacheKey) throws where Value: Codable {
         if let value {
