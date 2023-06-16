@@ -38,17 +38,19 @@ public final class UserDefaultsStorage: CodableKeyValueStorage {
         )
     }
 
-    public func save<Value>(_ value: Value?, forKey key: CacheKey) throws where Value: Codable {
+    public func save<Value, Key>(_ value: Value?, forKey key: Key) throws where Value: Codable, Key: Hashable {
+        let cachedKey = String(key.hashValue)
         if let value {
             let data = try serializer.serialize(value)
-            userDefaults.set(data, forKey: key.key)
+            userDefaults.set(data, forKey: cachedKey)
         } else {
-            userDefaults.setNilValueForKey(key.key)
+            userDefaults.set(nil, forKey: cachedKey)
         }
     }
     
-    public func value<Value>(forKey key: CacheKey) throws -> Value? where Value: Codable {
-        if let data = userDefaults.data(forKey: key.key) {
+    public func value<Value, Key>(forKey key: Key) throws -> Value? where Value: Codable, Key: Hashable {
+        let cachedKey = String(key.hashValue)
+        if let data = userDefaults.data(forKey: cachedKey) {
             return try deserializer.deserialize(data)
         } else {
             return nil

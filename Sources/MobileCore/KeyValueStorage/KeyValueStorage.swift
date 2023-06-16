@@ -7,25 +7,18 @@
 
 import Foundation
 
-public struct CacheKey {
-    let key: String
-    public init(key: String) {
-        self.key = key
-    }
-}
-
 public protocol KeyValueStorage {
-    func save<Value>(_ value: Value?, forKey: CacheKey) throws
-    func value<Value>(forKey: CacheKey) throws -> Value?
+    func save<Value, Key>(_ value: Value?, forKey: Key) throws where Key: Hashable
+    func value<Value, Key>(forKey: Key) throws -> Value? where Key: Hashable
 }
 
 public extension KeyValueStorage {
-    func value<Value>(forKey key: CacheKey, default: Value) throws -> Value {
+    func value<Value, Key>(forKey key: Key, default: Value) throws -> Value where Key: Hashable {
         try value(forKey: key) ?? `default`
     }
 }
 
 public protocol CodableKeyValueStorage {
-    func save<Value>(_ value: Value?, forKey: CacheKey) throws where Value: Codable
-    func value<Value>(forKey: CacheKey) throws -> Value?  where Value: Codable
+    func save<Value, Key>(_ value: Value?, forKey: Key) throws where Value: Codable, Key: Hashable
+    func value<Value, Key>(forKey: Key) throws -> Value?  where Value: Codable, Key: Hashable
 }
