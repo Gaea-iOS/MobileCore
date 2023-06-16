@@ -23,7 +23,7 @@ public final class UserDefaultsStorage: CodableKeyValueStorage {
         self.deserializer = deserializer
     }
     
-    convenience init?(
+    convenience public init?(
         suiteName: String,
         serializer: AnyEncodableSerializer = JSONEncoder(),
         deserializer: AnyDecodableDeserializer = JSONDecoder()
