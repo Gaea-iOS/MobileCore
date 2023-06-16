@@ -4,22 +4,19 @@
 
 import Foundation
 
-typealias Encode<T: Encodable> = (T) throws -> Data
-typealias Decode<T: Decodable> = (Data) throws -> T
-
 public final class EncodableSerializer<Input>: Serializer where Input: Encodable {
-    private let encode: Encode<Input>
+    let serializer: AnyEncodableSerializer
 
-    init(encode: @escaping Encode<Input>) {
-        self.encode = encode
+    init(serializer: AnyEncodableSerializer) {
+        self.serializer = serializer
     }
 
     public func serialize(_ input: Input) throws -> Data {
-        try encode(input)
+        try serializer.serialize(input)
     }
     
     public convenience init(encoder: JSONEncoder = .init()) {
-        self.init(encode: encoder.encode(_:))
+        self.init(serializer: encoder)
     }
 }
 
@@ -30,17 +27,17 @@ extension JSONDecoder {
 }
 
 public final class DecodableDeserializer<Output>: Deserializer where Output: Decodable {
-    private let decode: Decode<Output>
+    private let deserializer: AnyDecodableDeserializer
 
-    init(decode: @escaping Decode<Output>) {
-        self.decode = decode
+    init(deserializer: AnyDecodableDeserializer) {
+        self.deserializer = deserializer
     }
     
     public convenience init(decoder: JSONDecoder = .init()) {
-        self.init(decode: decoder.decode(from:))
+        self.init(deserializer: decoder)
     }
 
     public func deserialize(_ data: Data) throws -> Output {
-        try decode(data)
+        try deserializer.deserialize(data)
     }
 }
