@@ -17,4 +17,4 @@ public protocol KeyValueStorage {
     func all() -> [Key: Value]?
 }
 
-public protocol CodableKeyValueStorage: KeyValueStorage where Value: Codable {}
+public protocol CodableKeyValueStorage<Key, Value>: KeyValueStorage where Value: Codable {}
