@@ -29,8 +29,8 @@ public final class UserDefaultsStorage<K, V>: CodableKeyValueStorage where K: Ha
     
     convenience public init?(
         suiteName: String,
-        serializer: any Serializer<Value>,
-        deserializer: any Deserializer<Value>
+        serializer: any Serializer<Value> = EncodableSerializer<Value>(),
+        deserializer: any Deserializer<Value> = DecodableDeserializer<Value>()
     ) {
         guard let userDefaults = UserDefaults(suiteName: suiteName) else {
             return nil
