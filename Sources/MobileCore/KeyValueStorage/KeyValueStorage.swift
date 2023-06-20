@@ -8,17 +8,13 @@
 import Foundation
 
 public protocol KeyValueStorage {
-    func save<Value, Key>(_ value: Value?, forKey: Key) throws where Key: Hashable
-    func value<Value, Key>(forKey: Key) throws -> Value? where Key: Hashable
+    associatedtype Key: Hashable
+    associatedtype Value
+    
+    func save(_ value: Value?, forKey: Key) throws
+    func value(forKey: Key) throws -> Value?
+    
+    func all() -> [Key: Value]?
 }
 
-public extension KeyValueStorage {
-    func value<Value, Key>(forKey key: Key, default: Value) throws -> Value where Key: Hashable {
-        try value(forKey: key) ?? `default`
-    }
-}
-
-public protocol CodableKeyValueStorage {
-    func save<Value, Key>(_ value: Value?, forKey: Key) throws where Value: Codable, Key: Hashable
-    func value<Value, Key>(forKey: Key) throws -> Value?  where Value: Codable, Key: Hashable
-}
+public protocol CodableKeyValueStorage: KeyValueStorage where Value: Codable {}

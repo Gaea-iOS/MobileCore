@@ -7,16 +7,20 @@
 
 import Foundation
 
-public final class UserDefaultsStorage: CodableKeyValueStorage {
+public final class UserDefaultsStorage<K, V>: CodableKeyValueStorage where K: Hashable, V: Codable {
+    
+    public typealias Key = K
+    public typealias Value = V
+    
     private let userDefaults: UserDefaults
     
-    private let serializer: AnyEncodableSerializer
-    private let deserializer: AnyDecodableDeserializer
+    private let serializer: any Serializer<Value>
+    private let deserializer: any Deserializer<Value>
 
-    public init(
+    init(
         userDefaults: UserDefaults = .standard,
-        serializer: AnyEncodableSerializer = JSONEncoder(),
-        deserializer: AnyDecodableDeserializer = JSONDecoder()
+        serializer: any Serializer<Value> = EncodableSerializer<Value>(),
+        deserializer: any Deserializer<Value> = DecodableDeserializer<Value>()
     ){
         self.userDefaults = userDefaults
         self.serializer = serializer
@@ -25,8 +29,8 @@ public final class UserDefaultsStorage: CodableKeyValueStorage {
     
     convenience public init?(
         suiteName: String,
-        serializer: AnyEncodableSerializer = JSONEncoder(),
-        deserializer: AnyDecodableDeserializer = JSONDecoder()
+        serializer: any Serializer<Value>,
+        deserializer: any Deserializer<Value>
     ) {
         guard let userDefaults = UserDefaults(suiteName: suiteName) else {
             return nil
@@ -38,7 +42,7 @@ public final class UserDefaultsStorage: CodableKeyValueStorage {
         )
     }
 
-    public func save<Value, Key>(_ value: Value?, forKey key: Key) throws where Value: Codable, Key: Hashable {
+    public func save(_ value: Value?, forKey key: Key) throws {
         let cachedKey = String(key.hashValue)
         if let value {
             let data = try serializer.serialize(value)
@@ -48,12 +52,16 @@ public final class UserDefaultsStorage: CodableKeyValueStorage {
         }
     }
     
-    public func value<Value, Key>(forKey key: Key) throws -> Value? where Value: Codable, Key: Hashable {
+    public func value(forKey key: Key) throws -> Value? {
         let cachedKey = String(key.hashValue)
         if let data = userDefaults.data(forKey: cachedKey) {
             return try deserializer.deserialize(data)
         } else {
             return nil
         }
+    }
+    
+    public func all() -> [K : V]? {
+        userDefaults.dictionaryRepresentation() as? [K: V]
     }
 }

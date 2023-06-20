@@ -11,11 +11,11 @@ public final class UserDefaultsCache<T>: Caching {
     private let serializer: any Serializer<T>
     private let deserializer: any Deserializer<T>
 
-    public init(
+    init(
         userDefaults: UserDefaults = .standard,
         cacheKey: String,
-        serializer: some Serializer<T>,
-        deserializer: some Deserializer<T>
+        serializer: any Serializer<T>,
+        deserializer: any Deserializer<T>
     ){
         self.userDefaults = userDefaults
         self.cacheKey = cacheKey
