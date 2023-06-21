@@ -7,9 +7,7 @@
 
 import Foundation
 
-public final class UserDefaultsStorage<K, V>: CodableKeyValueStorage where K: Hashable, V: Codable {
-    
-    public typealias Key = K
+public final class UserDefaultsStorage<V>: CodableKeyValueStorage where V: Codable {
     public typealias Value = V
     
     private let userDefaults: UserDefaults
@@ -42,19 +40,17 @@ public final class UserDefaultsStorage<K, V>: CodableKeyValueStorage where K: Ha
         )
     }
 
-    public func save(_ value: Value?, forKey key: Key) throws {
-        let cachedKey = String(key.hashValue)
+    public func save(_ value: Value?, forKey cachedKey: CachedKey<Value>) throws {
         if let value {
             let data = try serializer.serialize(value)
-            userDefaults.set(data, forKey: cachedKey)
+            userDefaults.set(data, forKey: cachedKey.key)
         } else {
-            userDefaults.set(nil, forKey: cachedKey)
+            userDefaults.set(nil, forKey: cachedKey.key)
         }
     }
     
-    public func value(forKey key: Key) throws -> Value? {
-        let cachedKey = String(key.hashValue)
-        if let data = userDefaults.data(forKey: cachedKey) {
+    public func value(forKey cachedKey: CachedKey<Value>) throws -> Value? {
+        if let data = userDefaults.data(forKey: cachedKey.key) {
             return try deserializer.deserialize(data)
         } else {
             return nil

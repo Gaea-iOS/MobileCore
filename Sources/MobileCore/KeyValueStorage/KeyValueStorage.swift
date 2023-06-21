@@ -7,12 +7,18 @@
 
 import Foundation
 
-public protocol KeyValueStorage {
-    associatedtype Key: Hashable
-    associatedtype Value
+public struct CachedKey<Value> {
+    let key: String
     
-    func save(_ value: Value?, forKey: Key) throws
-    func value(forKey: Key) throws -> Value?
+    public init(key: String) {
+        self.key = key
+    }
 }
 
-public protocol CodableKeyValueStorage<Key, Value>: KeyValueStorage where Value: Codable {}
+public protocol KeyValueStorage<Value> {
+    associatedtype Value
+    func save(_ value: Value?, forKey: CachedKey<Value>) throws
+    func value(forKey: CachedKey<Value>) throws -> Value?
+}
+
+public protocol CodableKeyValueStorage<Value>: KeyValueStorage where Value: Codable {}

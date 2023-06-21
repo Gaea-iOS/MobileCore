@@ -6,14 +6,14 @@ import Foundation
 
 public final class UserDefaultsCache<T>: Caching {
     private let userDefaults: UserDefaults
-    private let cacheKey: String
+    private let cacheKey: CachedKey<T>
     
     private let serializer: any Serializer<T>
     private let deserializer: any Deserializer<T>
 
     init(
         userDefaults: UserDefaults = .standard,
-        cacheKey: String,
+        cacheKey: CachedKey<T>,
         serializer: any Serializer<T>,
         deserializer: any Deserializer<T>
     ){
@@ -25,11 +25,11 @@ public final class UserDefaultsCache<T>: Caching {
 
     public func save(_ value: T) throws {
         let data = try serializer.serialize(value)
-        userDefaults.set(data, forKey: cacheKey)
+        userDefaults.set(data, forKey: cacheKey.key)
     }
 
     public func load() throws -> T? {
-        if let data = userDefaults.data(forKey: cacheKey) {
+        if let data = userDefaults.data(forKey: cacheKey.key) {
             let value = try deserializer.deserialize(data)
             return value
         } else {
@@ -41,7 +41,7 @@ public final class UserDefaultsCache<T>: Caching {
 public extension UserDefaultsCache where T: Codable {
     convenience init?(
         suiteName: String,
-        cacheKey: String,
+        cacheKey: CachedKey<T>,
         serializer: any Serializer<T> = EncodableSerializer<T>(),
         deserializer: any Deserializer<T> = DecodableDeserializer<T>()
     ) {
