@@ -7,11 +7,15 @@
 
 import Foundation
 
-public struct CachedKey<Value> {
+public struct CachedKey<Value>: ExpressibleByStringLiteral {
     let key: String
     
     public init(key: String) {
         self.key = key
+    }
+    
+    public init(stringLiteral value: String) {
+        self.key = value
     }
 }
 
