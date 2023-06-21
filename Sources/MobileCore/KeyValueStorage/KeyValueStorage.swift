@@ -13,8 +13,6 @@ public protocol KeyValueStorage {
     
     func save(_ value: Value?, forKey: Key) throws
     func value(forKey: Key) throws -> Value?
-    
-    func all() -> [Key: Value]?
 }
 
 public protocol CodableKeyValueStorage<Key, Value>: KeyValueStorage where Value: Codable {}

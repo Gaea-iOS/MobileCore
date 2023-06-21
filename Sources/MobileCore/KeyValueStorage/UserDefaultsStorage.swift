@@ -60,8 +60,4 @@ public final class UserDefaultsStorage<K, V>: CodableKeyValueStorage where K: Ha
             return nil
         }
     }
-    
-    public func all() -> [K : V]? {
-        userDefaults.dictionaryRepresentation() as? [K: V]
-    }
 }
