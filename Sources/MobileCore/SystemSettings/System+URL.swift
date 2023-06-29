@@ -10,6 +10,7 @@ import UIKit
 
 extension System where Base == URL {
     public static let appSettings: Base = .init(string: UIApplication.openSettingsURLString)!
+    public static let settings: Base = .init(string: "App-Prefs:root=General")!
 
     public static func appStorePage(appID: String) -> Base {
         .init(string: "https://itunes.apple.com/app/id\(appID)")!
