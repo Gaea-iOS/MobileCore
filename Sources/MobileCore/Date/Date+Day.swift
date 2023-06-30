@@ -8,18 +8,19 @@
 import Foundation
 
 public extension Date {
-    func startOfDay(in calendar: Calendar = .current) -> Date {
-        calendar.startOfDay(for: self)
+    func yesterday(in calendar: Calendar = .current) -> Self {
+        calendar.date(byAdding: .day, value: -1, to: self)!
     }
     
-    func endOfDay(in calendar: Calendar = .current) -> Date {
-        let startOfDay = startOfDay(in: calendar)
-        
-        var components = DateComponents()
-        components.day = 1
-        components.second = -1
-        
-        let endOfDay = calendar.date(byAdding: components, to: startOfDay)!
-        return endOfDay
+    func tomorrow(in calendar: Calendar = .current) -> Self {
+        calendar.date(byAdding: .day, value: 1, to: self)!
+    }
+    
+    func dayBeforeYesterday(in calendar: Calendar = .current) -> Self {
+        calendar.date(byAdding: .day, value: -2, to: self)!
+    }
+    
+    func dayAfterTomorrow(in calendar: Calendar = .current) -> Self {
+        calendar.date(byAdding: .day, value: 2, to: self)!
     }
 }
