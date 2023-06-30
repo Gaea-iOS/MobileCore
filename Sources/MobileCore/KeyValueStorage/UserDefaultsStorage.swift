@@ -7,39 +7,24 @@
 
 import Foundation
 
-public final class UserDefaultsStorage<V>: CodableKeyValueStorage where V: Codable {
+public final class UserDefaultsStorage<V>: KeyValueStorage {
     public typealias Value = V
     
     private let userDefaults: UserDefaults
     
     private let serializer: any Serializer<Value>
     private let deserializer: any Deserializer<Value>
-
+    
     init(
         userDefaults: UserDefaults = .standard,
-        serializer: any Serializer<Value> = EncodableSerializer<Value>(),
-        deserializer: any Deserializer<Value> = DecodableDeserializer<Value>()
-    ){
+        serializer: any Serializer<Value>,
+        deserializer: any Deserializer<Value>
+    ) {
         self.userDefaults = userDefaults
         self.serializer = serializer
         self.deserializer = deserializer
     }
     
-    convenience public init?(
-        suiteName: String,
-        serializer: any Serializer<Value> = EncodableSerializer<Value>(),
-        deserializer: any Deserializer<Value> = DecodableDeserializer<Value>()
-    ) {
-        guard let userDefaults = UserDefaults(suiteName: suiteName) else {
-            return nil
-        }
-        self.init(
-            userDefaults: userDefaults,
-            serializer: serializer,
-            deserializer: deserializer
-        )
-    }
-
     public func save(_ value: Value?, forKey cachedKey: CachedKey<Value>) throws {
         if let value {
             let data = try serializer.serialize(value)
@@ -55,5 +40,22 @@ public final class UserDefaultsStorage<V>: CodableKeyValueStorage where V: Codab
         } else {
             return nil
         }
+    }
+}
+
+extension UserDefaultsStorage where V: Codable {
+    convenience public init?(
+        suiteName: String,
+        serializer: any Serializer<Value> = EncodableSerializer<Value>(),
+        deserializer: any Deserializer<Value> = DecodableDeserializer<Value>()
+    ) {
+        guard let userDefaults = UserDefaults(suiteName: suiteName) else {
+            return nil
+        }
+        self.init(
+            userDefaults: userDefaults,
+            serializer: serializer,
+            deserializer: deserializer
+        )
     }
 }

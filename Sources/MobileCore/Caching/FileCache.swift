@@ -4,39 +4,39 @@
 
 import Foundation
 
-public final class FileCache<T>: Caching {
+public final class FileCache<Value>: Caching {
     private let file: URL
-    private let serializer: any Serializer<T>
-    private let deserializer: any Deserializer<T>
+    private let serializer: any Serializer<Value>
+    private let deserializer: any Deserializer<Value>
 
     public init(
         file: URL,
-        serializer: some Serializer<T>,
-        deserializer: some Deserializer<T>
+        serializer: some Serializer<Value>,
+        deserializer: some Deserializer<Value>
     ) {
         self.file = file
         self.serializer = serializer
         self.deserializer = deserializer
     }
 
-    public func save(_ value: T) throws {
+    public func save(_ value: Value) throws {
         let data = try serializer.serialize(value)
         try data.write(to: file)
     }
 
-    public func load() throws -> T? {
+    public func load() throws -> Value? {
         let data = try Data(contentsOf: file)
         let value = try deserializer.deserialize(data)
         return value
     }
 }
 
-public extension FileCache where T: Codable {
+public extension FileCache where Value: Codable {
     convenience init(
         subFolder: String,
         fileName: String,
-        serializer: any Serializer<T> = EncodableSerializer<T>(),
-        deserializer: any Deserializer<T> = DecodableDeserializer<T>()
+        serializer: any Serializer<Value> = EncodableSerializer<Value>(),
+        deserializer: any Deserializer<Value> = DecodableDeserializer<Value>()
     ) {
         let document = DocumentDirectory(subFolder: subFolder)
         let file = FilePath(directory: document, fileName: fileName).url

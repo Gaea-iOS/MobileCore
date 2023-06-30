@@ -4,8 +4,8 @@
 
 import Foundation
 
-public protocol Caching<T> {
-    associatedtype T
-    func save(_ value: T) throws
-    func load() throws -> T?
+public protocol Caching<Value> {
+    associatedtype Value
+    func save(_ value: Value) throws
+    func load() throws -> Value?
 }

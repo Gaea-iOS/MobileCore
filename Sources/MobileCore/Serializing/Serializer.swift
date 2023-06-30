@@ -16,6 +16,3 @@ public protocol AnySerializer {
 public protocol AnyEncodableSerializer {
     func serialize<Input>(_ input: Input) throws -> Data where Input: Encodable
 }
-
-
-

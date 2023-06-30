@@ -4,18 +4,18 @@
 
 import Foundation
 
-public final class UserDefaultsCache<T>: Caching {
+public final class UserDefaultsCache<Value>: Caching {
     private let userDefaults: UserDefaults
-    private let cacheKey: CachedKey<T>
+    private let cacheKey: CachedKey<Value>
     
-    private let serializer: any Serializer<T>
-    private let deserializer: any Deserializer<T>
+    private let serializer: any Serializer<Value>
+    private let deserializer: any Deserializer<Value>
 
     init(
         userDefaults: UserDefaults = .standard,
-        cacheKey: CachedKey<T>,
-        serializer: any Serializer<T>,
-        deserializer: any Deserializer<T>
+        cacheKey: CachedKey<Value>,
+        serializer: any Serializer<Value>,
+        deserializer: any Deserializer<Value>
     ){
         self.userDefaults = userDefaults
         self.cacheKey = cacheKey
@@ -23,12 +23,12 @@ public final class UserDefaultsCache<T>: Caching {
         self.deserializer = deserializer
     }
 
-    public func save(_ value: T) throws {
+    public func save(_ value: Value) throws {
         let data = try serializer.serialize(value)
         userDefaults.set(data, forKey: cacheKey.key)
     }
 
-    public func load() throws -> T? {
+    public func load() throws -> Value? {
         if let data = userDefaults.data(forKey: cacheKey.key) {
             let value = try deserializer.deserialize(data)
             return value
@@ -38,12 +38,12 @@ public final class UserDefaultsCache<T>: Caching {
     }
 }
 
-public extension UserDefaultsCache where T: Codable {
+public extension UserDefaultsCache where Value: Codable {
     convenience init?(
         suiteName: String,
-        cacheKey: CachedKey<T>,
-        serializer: any Serializer<T> = EncodableSerializer<T>(),
-        deserializer: any Deserializer<T> = DecodableDeserializer<T>()
+        cacheKey: CachedKey<Value>,
+        serializer: any Serializer<Value> = EncodableSerializer<Value>(),
+        deserializer: any Deserializer<Value> = DecodableDeserializer<Value>()
     ) {
         guard let userDefaults = UserDefaults(suiteName: suiteName) else {
             return nil
