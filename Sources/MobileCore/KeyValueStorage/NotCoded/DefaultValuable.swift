@@ -26,3 +26,9 @@ extension String: DefaultValuable {
 extension Optional: DefaultValuable {
     public static var defaultValue: Self { .none }
 }
+
+extension Array: DefaultValuable {
+    public static var defaultValue: Array<Element> {
+        []
+    }
+}
