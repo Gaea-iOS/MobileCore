@@ -13,6 +13,17 @@ public protocol KeyValueStorage<Value> {
     func value(forKey: CachedKey<Value>) throws -> Value?
 }
 
+extension KeyValueStorage {
+    func value(forKey cachedKey: CachedKey<Value>, `default`: Value) -> Value? {
+        do {
+            return try value(forKey: cachedKey) ?? `default`
+        } catch {
+            return `default`
+        }
+    }
+}
+
+
 public struct CachedKey<Value>: ExpressibleByStringLiteral {
     let key: String
     
