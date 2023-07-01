@@ -33,3 +33,4 @@ extension NotCoded: Codable {
 }
 
 extension NotCoded: Equatable where Value: Equatable {}
+extension NotCoded: Sendable where Value: Sendable {}
