@@ -24,3 +24,17 @@ public extension Date {
         calendar.date(byAdding: .day, value: 2, to: self)!
     }
 }
+
+public extension Date {
+    init?(year: Int, month: Int, day: Int, in calendar: Calendar = .current) {
+        guard let date = DateComponents(
+            calendar: calendar,
+            year: year,
+            month: month,
+            day: day
+        ).date else {
+            return nil
+        }
+        self = date
+    }
+}
