@@ -7,9 +7,7 @@
 
 import Foundation
 
-public final class UserDefaultsStorage<V>: KeyValueStorage {
-    public typealias Value = V
-    
+public final class UserDefaultsStorage<Value>: KeyValueStorage {    
     private let userDefaults: UserDefaults
     
     private let serializer: any Serializer<Value>
@@ -43,7 +41,7 @@ public final class UserDefaultsStorage<V>: KeyValueStorage {
     }
 }
 
-extension UserDefaultsStorage where V: Codable {
+extension UserDefaultsStorage where Value: Codable {
     convenience public init?(
         suiteName: String,
         serializer: any Serializer<Value> = EncodableSerializer<Value>(),
