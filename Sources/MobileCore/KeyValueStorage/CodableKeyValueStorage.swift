@@ -12,7 +12,7 @@ public protocol CodableKeyValueStorage {
     func value<Value>(forKey: CachedKey<Value>) throws -> Value? where Value: Codable
 }
 
-extension CodableKeyValueStorage {
+public extension CodableKeyValueStorage {
     func value<Value>(forKey cachedKey: CachedKey<Value>, `default`: Value) -> Value where Value: Codable {
         do {
             return try value(forKey: cachedKey) ?? `default`

@@ -13,7 +13,7 @@ public protocol KeyValueStorage<Value> {
     func value(forKey: CachedKey<Value>) throws -> Value?
 }
 
-extension KeyValueStorage {
+public extension KeyValueStorage {
     func value(forKey cachedKey: CachedKey<Value>, `default`: Value) -> Value? {
         do {
             return try value(forKey: cachedKey) ?? `default`
