@@ -8,14 +8,14 @@
 import Foundation
 
 public extension Date {
-    func startOfMonth(in calendar: Calendar) -> Date {
+    func startOfMonth(in calendar: Calendar = .current) -> Date {
         let calendar = NSCalendar.current
         let components = calendar.dateComponents([.year, .month], from: self)
         let startOfMonth = calendar.date(from: components)!
         return startOfMonth
     }
  
-    func endOfMonth(in calendar: Calendar, returnEndTime: Bool = false) -> Date {
+    func endOfMonth(in calendar: Calendar = .current, returnEndTime: Bool = false) -> Date {
         var components = DateComponents()
         components.month = 1
         if returnEndTime {
