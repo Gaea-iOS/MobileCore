@@ -40,20 +40,10 @@ public extension Date {
             calendar.date(byAdding: .day, value: $0 - 1, to: startOfMonth)!
         }
     }
-    
-    func previousMonthDates(in calendar: Calendar = .current) -> [Date] {
-        let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: self)!
-        return previousMonthDate.monthDates(in: calendar)
-    }
-    
-    func nextMonthDates(in calendar: Calendar = .current) -> [Date] {
-        let previousMonthDate = calendar.date(byAdding: .month, value: 1, to: self)!
-        return previousMonthDate.monthDates(in: calendar)
-    }
 }
 
 public extension Date {
-    func monthDatesGroupInWeek(in calendar: Calendar = .current) -> [Date] {
+    func monthDatesWithPadding(in calendar: Calendar = .current) -> [Date] {
         let startOfMonth = startOfMonth(in: calendar)
         let endOfMonth = endOfMonth(in: calendar)
         
@@ -75,21 +65,5 @@ public extension Date {
         let dates = prefixDates + monthDates(in: calendar) + postfixDates
         precondition(dates.count % 7 == 0)
         return dates
-//
-//        let numberOfGroup = dates.count / 7
-//
-//        return (0..<numberOfGroup).map {
-//            Array(dates[($0 * 7)...($0 * 7 + 6)])
-//        }
-    }
-    
-    func previousMonthDatesGroupInWeek(in calendar: Calendar = .current) -> [Date] {
-        let previousMonthDate = calendar.date(byAdding: .month, value: -1, to: self)!
-        return previousMonthDate.monthDatesGroupInWeek(in: calendar)
-    }
-    
-    func nextMonthDatesGroupInWeek(in calendar: Calendar = .current) -> [Date] {
-        let previousMonthDate = calendar.date(byAdding: .month, value: 1, to: self)!
-        return previousMonthDate.monthDatesGroupInWeek(in: calendar)
     }
 }
