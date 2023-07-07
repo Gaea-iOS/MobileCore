@@ -13,30 +13,16 @@ public extension Date {
     func yesterday(in calendar: Calendar = .current) -> Self {
         calendar.date(byAdding: .day, value: -1, to: self)!
     }
-//
-//    func tomorrow(in calendar: Calendar = .current) -> Self {
-//        calendar.date(byAdding: .day, value: 1, to: self)!
-//    }
-//
-//    func dayBeforeYesterday(in calendar: Calendar = .current) -> Self {
-//        calendar.date(byAdding: .day, value: -2, to: self)!
-//    }
-//
-//    func dayAfterTomorrow(in calendar: Calendar = .current) -> Self {
-//        calendar.date(byAdding: .day, value: 2, to: self)!
-//    }
-}
 
-//public extension Date {
-//    init?(year: Int, month: Int, day: Int, in calendar: Calendar = .current) {
-//        guard let date = DateComponents(
-//            calendar: calendar,
-//            year: year,
-//            month: month,
-//            day: day
-//        ).date else {
-//            return nil
-//        }
-//        self = date
-//    }
-//}
+    func tomorrow(in calendar: Calendar = .current) -> Self {
+        calendar.date(byAdding: .day, value: 1, to: self)!
+    }
+
+    func dayBeforeYesterday(in calendar: Calendar = .current) -> Self {
+        calendar.date(byAdding: .day, value: -2, to: self)!
+    }
+
+    func dayAfterTomorrow(in calendar: Calendar = .current) -> Self {
+        calendar.date(byAdding: .day, value: 2, to: self)!
+    }
+}
