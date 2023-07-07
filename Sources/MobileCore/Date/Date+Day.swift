@@ -9,9 +9,10 @@ import Foundation
 
 public extension Date {
     static let today: Self = .init()
-//    func yesterday(in calendar: Calendar = .current) -> Self {
-//        calendar.date(byAdding: .day, value: -1, to: self)!
-//    }
+    
+    func yesterday(in calendar: Calendar = .current) -> Self {
+        calendar.date(byAdding: .day, value: -1, to: self)!
+    }
 //
 //    func tomorrow(in calendar: Calendar = .current) -> Self {
 //        calendar.date(byAdding: .day, value: 1, to: self)!
