@@ -8,7 +8,7 @@
 import Foundation
 
 public extension Date {
-    static let now: Self = .init()
+    static func now() -> Self { .init() }
     
     func yesterday(in calendar: Calendar = .current) -> Self {
         calendar.date(byAdding: .day, value: -1, to: self)!
