@@ -25,7 +25,7 @@ public extension KeyValueStorage {
 
 
 public struct CachedKey<Value>: ExpressibleByStringLiteral {
-    let key: String
+    public let key: String
     
     public init(key: String) {
         self.key = key
