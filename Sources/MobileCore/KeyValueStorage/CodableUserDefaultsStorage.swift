@@ -13,7 +13,7 @@ public final class CodableUserDefaultsStorage: CodableKeyValueStorage {
     private let serializer: any AnyEncodableSerializer
     private let deserializer: any AnyDecodableDeserializer
 
-    init(
+    public init(
         userDefaults: UserDefaults = .standard,
         serializer: any AnyEncodableSerializer = JSONEncoder(),
         deserializer: any AnyDecodableDeserializer = JSONDecoder()
