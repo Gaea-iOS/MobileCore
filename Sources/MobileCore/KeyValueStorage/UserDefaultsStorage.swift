@@ -30,6 +30,7 @@ public final class UserDefaultsStorage<Value>: KeyValueStorage {
         } else {
             userDefaults.set(nil, forKey: cachedKey.key)
         }
+        userDefaults.synchronize()
     }
     
     public func value(forKey cachedKey: CachedKey<Value>) throws -> Value? {

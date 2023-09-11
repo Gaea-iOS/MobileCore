@@ -45,6 +45,7 @@ public final class CodableUserDefaultsStorage: CodableKeyValueStorage {
         } else {
             userDefaults.set(nil, forKey: cachedKey.key)
         }
+        userDefaults.synchronize()
     }
     
     public func value<Value>(forKey cachedKey: CachedKey<Value>) throws -> Value? where Value: Codable {

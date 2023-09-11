@@ -26,6 +26,7 @@ public final class UserDefaultsCache<Value>: Caching {
     public func save(_ value: Value) throws {
         let data = try serializer.serialize(value)
         userDefaults.set(data, forKey: cacheKey.key)
+        userDefaults.synchronize()
     }
 
     public func load() throws -> Value? {
