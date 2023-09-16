@@ -16,6 +16,10 @@ import Foundation
     public var id: Int {
         rawValue
     }
+    
+    public var isWeekend: Bool {
+        SortedSet<Weekday>.weekend.contains(self)
+    }
 
     public static func < (lhs: Weekday, rhs: Weekday) -> Bool {
         lhs.rawValue < rhs.rawValue
