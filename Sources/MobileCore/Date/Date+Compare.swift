@@ -59,4 +59,19 @@ public extension Date {
     var isInThePast:   Bool {
         self < Date()
     }
+    
+    func isInTheMorning(in calendar: Calendar = .current) -> Bool {
+        let hour = calendar.dateComponents([.hour], from: self).hour!
+        return hour < 12
+    }
+    
+    func isInTheAfternoon(in calendar: Calendar = .current) -> Bool {
+        let hour = calendar.dateComponents([.hour], from: self).hour!
+        return hour >= 12 && hour < 18
+    }
+    
+    func isInTheEvening(in calendar: Calendar = .current) -> Bool {
+        let hour = calendar.dateComponents([.hour], from: self).hour!
+        return hour >= 18 && hour < 24
+    }
 }
