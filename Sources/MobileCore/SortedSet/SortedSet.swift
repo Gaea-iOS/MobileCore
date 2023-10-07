@@ -73,6 +73,14 @@ extension SortedSet: RandomAccessCollection {
     }
 }
 
+public extension SortedSet {
+    func nextElement(of element: Element) -> Element? {
+        guard let index = index(of: element) else { return nil }
+        let nextIndex = index + 1
+        return array.element(at: nextIndex)
+    }
+}
+
 extension SortedSet {
     func index(of element: Element) -> Int? {
         array.firstIndex(of: element)
