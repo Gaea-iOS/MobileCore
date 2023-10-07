@@ -8,6 +8,11 @@
 import Foundation
 
 public extension Array {
+    func element(at index: Int) -> Element? {
+        guard index >= 0, index < count else { return nil }
+        return self[index]
+    }
+    
     func group(in number: Int) -> [[Element]] {
         let numberOfGroup = count / number
         
