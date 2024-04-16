@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Language: String{
+public enum Language: String {
     case zh_Hans
     case zh_Hant
     case en
