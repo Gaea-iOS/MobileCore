@@ -70,7 +70,7 @@ public struct Pin: Equatable {
         bits[currentCount].update(character: character)
     }
 
-    public mutating func reset() {
+    private mutating func reset() {
         bits = initialBits(with: length)
     }
 }
