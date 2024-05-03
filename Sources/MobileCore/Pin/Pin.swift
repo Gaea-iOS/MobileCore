@@ -47,7 +47,10 @@ public struct Pin: Equatable {
 
     public var value: String {
         get {
-            bits.map(\.character).filterNil().map(String.init).reduce("", +)
+            bits.map(\.character)
+                .compactMap{ $0 }
+                .map(String.init)
+                .reduce("", +)
         }
         set {
             reset()
@@ -73,7 +76,7 @@ public struct Pin: Equatable {
         bits[currentCount].update(character: character)
     }
 
-    mutating func reset() {
+    public mutating func reset() {
         bits = initialBits(with: length)
     }
 }
