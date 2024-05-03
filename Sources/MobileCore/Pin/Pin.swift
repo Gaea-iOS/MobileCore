@@ -30,17 +30,11 @@ public struct Pin: Equatable {
         }
     }
 
-    public enum Length: Int, Equatable {
-        case four = 4
-        case six = 6
-        case eight = 8
-    }
-
     public private(set) var bits: [Bit] = []
 
-    let length: Length
+    let length: Int
 
-    public init(length: Length) {
+    public init(length: Int) {
         self.length = length
         bits = initialBits(with: length)
     }
@@ -60,11 +54,11 @@ public struct Pin: Equatable {
     }
 
     public var isDone: Bool {
-        bits.filter { $0.character != nil }.count == length.rawValue
+        bits.filter { $0.character != nil }.count == length
     }
 
-    private func initialBits(with length: Length) -> [Bit] {
-        (0 ..< length.rawValue).map(Bit.init(index:))
+    private func initialBits(with length: Int) -> [Bit] {
+        (0 ..< length).map(Bit.init(index:))
     }
 
     private var currentCount: Int {
