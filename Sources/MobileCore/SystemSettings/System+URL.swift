@@ -12,11 +12,11 @@ extension System where Base == URL {
     public static let appSettings: Base = .init(string: UIApplication.openSettingsURLString)!
     public static let settings: Base = .init(string: "App-Prefs:root=General")!
 
-    public static func appStorePage(appID: String) -> Base {
+    public static func appstorePage(appID: String) -> Base {
         .init(string: "https://itunes.apple.com/app/id\(appID)")!
     }
 
-    public static func appStoreReviewPage(appID: String) -> Base {
+    public static func appstoreReviewPage(appID: String) -> Base {
         .init(string: "https://itunes.apple.com/app/id\(appID)?action=write-review")!
     }
 
