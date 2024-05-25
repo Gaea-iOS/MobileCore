@@ -7,8 +7,8 @@
 
 import Foundation
 
-public extension String.LocalizationValue {
+public extension String {
     var localized: String {
-        .init(localized: self)
+        .init(localized: LocalizationValue(self))
     }
 }
