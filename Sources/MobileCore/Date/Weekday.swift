@@ -3,6 +3,7 @@
 // Created by Jerry X T Wang on 2023/3/1.
 
 import Foundation
+import Collections
 
 @frozen public enum Weekday: Int, Equatable, Hashable, Comparable, Codable, CaseIterable, Identifiable {
     case sunday = 1
@@ -18,7 +19,7 @@ import Foundation
     }
     
     public var isWeekend: Bool {
-        SortedSet<Weekday>.weekend.contains(self)
+        OrderedSet<Weekday>.weekend.contains(self)
     }
 
     public static func < (lhs: Weekday, rhs: Weekday) -> Bool {
@@ -38,8 +39,8 @@ import Foundation
     }
 }
 
-public extension SortedSet where Element == Weekday {
-    static let workdays: SortedSet<Weekday> = [.monday, .tuesday, .wednesday, .thursday, .friday]
-    static let weekend: SortedSet<Weekday> = [.saturday, .sunday]
-    static let everyDay: SortedSet<Weekday> = SortedSet(Weekday.allCases)
+public extension OrderedSet where Element == Weekday {
+    static let workdays: Self = [.monday, .tuesday, .wednesday, .thursday, .friday]
+    static let weekend: Self = [.saturday, .sunday]
+    static let everyDay: Self = .init(Weekday.allCases)
 }
