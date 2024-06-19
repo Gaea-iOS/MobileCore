@@ -8,11 +8,9 @@
 import Foundation
 
 public struct Pin: Equatable {
-    public struct Bit: Identifiable, Equatable {
+    public struct Bit: Equatable, Hashable {
         let index: Int
         public private(set) var character: Character?
-
-        public var id: Int { index }
 
         init(
             index: Int
