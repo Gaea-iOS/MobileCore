@@ -8,41 +8,12 @@
 import Foundation
 import SwiftUI
 
+// Refer to https://www.swiftbysundell.com/articles/type-safe-identifiers-in-swift/
 public struct ID<T> {
     private var value = UUID()
+    public init() {}
 }
 
 extension ID: Equatable where Self: Equatable {}
 extension ID: Codable where Self: Codable {}
-
-extension Binding {
-    func isPresent<Wrapped>() -> Binding<Bool> 
-    where Value == Wrapped? {
-        .init(
-            get: { wrappedValue != nil },
-            set: { isPresent, transaction in
-                if !isPresent {
-                    self.transaction(transaction).wrappedValue = nil
-                }
-            }
-        )
-    }
-}
-
-extension Binding {
-    func removeDuplicates(by isDuplicate: @escaping (Value, Value) -> Bool) -> Self {
-        .init(
-            get: { wrappedValue },
-            set: { newValue, transaction in
-                guard isDuplicate(wrappedValue, newValue) else { return }
-                self.transaction(transaction).wrappedValue = newValue
-            }
-        )
-    }
-}
-
-extension Binding where Value: Equatable {
-    func removeDuplicates() -> Self {
-        removeDuplicates(by: ==)
-    }
-}
+extension ID: Hashable where Self: Hashable {}
