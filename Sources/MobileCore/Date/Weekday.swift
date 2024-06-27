@@ -4,7 +4,7 @@
 
 import Foundation
 
-@frozen public enum Weekday: Int, Equatable, Hashable, Comparable, Codable, CaseIterable, Identifiable {
+@frozen public enum Weekday: Int, Equatable, Hashable, Comparable, Codable, CaseIterable, Swift.Identifiable {
     case sunday = 1
     case monday
     case tuesday

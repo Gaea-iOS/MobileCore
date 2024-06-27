@@ -9,11 +9,19 @@ import Foundation
 import SwiftUI
 
 // Refer to https://www.swiftbysundell.com/articles/type-safe-identifiers-in-swift/
-public struct ID<T> {
-    private var value = UUID()
-    public init() {}
+public protocol TypeSafeIdentifiable {
+    associatedtype RawIdentifier: Codable = UUID
+    var id: ID<Self> { get }
 }
 
-extension ID: Equatable where Self: Equatable {}
-extension ID: Codable where Self: Codable {}
-extension ID: Hashable where Self: Hashable {}
+public struct ID<T: TypeSafeIdentifiable> {
+    private var rawValue: T.RawIdentifier
+    
+    init(rawValue: T.RawIdentifier) {
+        self.rawValue = rawValue
+    }
+}
+
+extension ID: Equatable where T.RawIdentifier: Equatable {}
+extension ID: Codable where T.RawIdentifier: Codable {}
+extension ID: Hashable where T.RawIdentifier: Hashable {}
