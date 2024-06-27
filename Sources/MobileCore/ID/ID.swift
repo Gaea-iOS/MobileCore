@@ -17,7 +17,7 @@ public protocol TypeSafeIdentifiable {
 public struct ID<T: TypeSafeIdentifiable> {
     private var rawValue: T.RawIdentifier
     
-    init(rawValue: T.RawIdentifier) {
+    public init(rawValue: T.RawIdentifier) {
         self.rawValue = rawValue
     }
 }
