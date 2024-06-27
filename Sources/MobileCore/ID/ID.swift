@@ -10,7 +10,7 @@ import SwiftUI
 
 // Refer to https://www.swiftbysundell.com/articles/type-safe-identifiers-in-swift/
 public protocol TypeSafeIdentifiable {
-    associatedtype RawIdentifier: Codable = UUID
+    associatedtype RawIdentifier = UUID
     var id: ID<Self> { get }
 }
 
