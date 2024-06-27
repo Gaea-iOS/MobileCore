@@ -25,3 +25,5 @@ public struct ID<T: TypeSafeIdentifiable> {
 extension ID: Equatable where T.RawIdentifier: Equatable {}
 extension ID: Codable where T.RawIdentifier: Codable {}
 extension ID: Hashable where T.RawIdentifier: Hashable {}
+
+extension Identifiable where Self: TypeSafeIdentifiable {}
