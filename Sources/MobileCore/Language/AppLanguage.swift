@@ -37,3 +37,9 @@ public enum AppLanguage: String {
         return .en
     }
 }
+
+public extension AppLanguage {
+    var isChinese: Bool {
+        self == .zh_Hant || self == .zh_Hans
+    }
+}
