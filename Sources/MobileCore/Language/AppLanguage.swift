@@ -22,12 +22,12 @@ public enum AppLanguage: String {
         guard let languageCode = locale.language.languageCode else {
             return .en
         }
-        let scriptCode = locale.language.script?.identifier
-
+        let script = locale.language.script
+        
         if languageCode == .english {
             return .en
         } else if languageCode == .chinese {
-            if scriptCode == "Hant" {
+            if script == .hanTraditional {
                 return .zh_Hant
             } else {
                 return .zh_Hans
