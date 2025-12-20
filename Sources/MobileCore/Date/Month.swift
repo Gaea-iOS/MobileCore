@@ -59,3 +59,7 @@ import Foundation
         dateFormatter.veryShortStandaloneMonthSymbols[rawValue - 1]
     }
 }
+
+public extension Set where Element == Month {
+    static let allMonths: Self = .init(Month.allCases)
+}
