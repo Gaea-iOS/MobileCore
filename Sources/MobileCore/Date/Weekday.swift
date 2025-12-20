@@ -21,20 +21,44 @@ import Foundation
         Set<Weekday>.weekend.contains(self)
     }
 
-    public static func < (lhs: Weekday, rhs: Weekday) -> Bool {
+    public static func < (lhs: Self, rhs: Self) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
+    
+    public func symbol(
+        dateFormatter: DateFormatter = .init()
+    ) -> String {
+        dateFormatter.weekdaySymbols[rawValue - 1]
+    }
 
-    public func shortWeekdaySymbols(
+    public func shortSymbol(
         dateFormatter: DateFormatter = .init()
     ) -> String {
         dateFormatter.shortWeekdaySymbols[rawValue - 1]
     }
 
-    public func veryShortWeekdaySymbols(
+    public func veryShortSymbol(
         dateFormatter: DateFormatter = .init()
     ) -> String {
         dateFormatter.veryShortWeekdaySymbols[rawValue - 1]
+    }
+    
+    public func standaloneSymbol(
+        dateFormatter: DateFormatter = .init()
+    ) -> String {
+        dateFormatter.standaloneWeekdaySymbols[rawValue - 1]
+    }
+    
+    public func shortStandaloneSymbol(
+        dateFormatter: DateFormatter = .init()
+    ) -> String {
+        dateFormatter.shortStandaloneWeekdaySymbols[rawValue - 1]
+    }
+    
+    public func veryShortStandaloneSymbol(
+        dateFormatter: DateFormatter = .init()
+    ) -> String {
+        dateFormatter.veryShortStandaloneWeekdaySymbols[rawValue - 1]
     }
 }
 
