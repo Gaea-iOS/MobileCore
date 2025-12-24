@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension LocalizedStringKey: Hashable {
+extension LocalizedStringKey: @retroactive Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(String(describing: self))
     }

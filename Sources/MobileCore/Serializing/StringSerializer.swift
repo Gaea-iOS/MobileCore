@@ -4,9 +4,11 @@
 
 import Foundation
 
-extension String: Error {}
-
 struct StringSerializer: Serializer {
+    enum SerializeError: Error {
+        case serializeFailed(String)
+    }
+    
     typealias Input = String
     private let encoding: String.Encoding
 
@@ -18,12 +20,16 @@ struct StringSerializer: Serializer {
         if let output = input.data(using: encoding) {
             return output
         } else {
-            throw ("Cannot deserialize string() to String using encoding(\(encoding).")
+            throw SerializeError.serializeFailed("Cannot deserialize String(\(input) to Data using encoding(\(encoding).")
         }
     }
 }
 
 struct StringDeserializer: Deserializer {
+    enum DeserializeError: Error {
+        case deserializeFailed(String)
+    }
+    
     typealias Output = String
     private let encoding: String.Encoding
 
@@ -36,7 +42,7 @@ struct StringDeserializer: Deserializer {
             return output
         } else {
             let bytes = ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: .binary)
-            throw ("Cannot serialize data(\(bytes)) to String using encoding(\(encoding).")
+            throw DeserializeError.deserializeFailed("Cannot serialize Data(\(bytes)) to String using encoding(\(encoding).")
         }
     }
 }
