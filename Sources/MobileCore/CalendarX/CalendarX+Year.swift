@@ -13,6 +13,12 @@ extension CalendarX {
         public static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.year == rhs.year
         }
+        
+        public static var current: Self {
+            let calendar: Calendar = CalendarX.gregorian
+            let year = calendar.component(.year, from: .now)
+            return .init(year: year)
+        }
 
         public init(year: Int) {
             self.year = year

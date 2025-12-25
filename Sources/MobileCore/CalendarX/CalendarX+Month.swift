@@ -16,6 +16,14 @@ extension CalendarX {
             lhs.year == rhs.year
             && lhs.month == rhs.month
         }
+        
+        public static var current: Self {
+            let calendar: Calendar = CalendarX.gregorian
+            let date: Date = .now
+            let year = calendar.component(.year, from: date)
+            let month = calendar.component(.month, from: date)
+            return .init(year: year, month: month)
+        }
 
         public init(year: Int, month: Int) {
             self.year = year
@@ -59,16 +67,6 @@ private extension CalendarX.Month {
             .datesInMonth(month, year: year)
         let days = dates.map(CalendarX.Day.init(date:))
         return days
-    }
-}
-
-extension CalendarX.Month {
-    public static func current() -> Self {
-        let calendar: Calendar = CalendarX.gregorian
-        let date: Date = .now
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
-        return .init(year: year, month: month)
     }
 }
 
