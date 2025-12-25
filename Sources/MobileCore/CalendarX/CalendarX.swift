@@ -5,5 +5,5 @@
 import Foundation
 
 public struct CalendarX {
-    public static let current: Calendar = .init(identifier: .gregorian)
+    public static let gregorian: Calendar = .init(identifier: .gregorian)
 }

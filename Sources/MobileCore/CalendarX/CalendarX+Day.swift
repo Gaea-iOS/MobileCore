@@ -28,7 +28,7 @@ extension CalendarX {
             components.month = month
             components.day = day
             
-            let calendar = CalendarX.current
+            let calendar = CalendarX.gregorian
             let date = calendar.date(from: components)!
             self.init(date: date)
         }
@@ -48,7 +48,7 @@ extension CalendarX {
         }
 
         public init(date: Date) {
-            let calendar = CalendarX.current
+            let calendar = CalendarX.gregorian
             year = calendar.component(.year, from: date)
             month = calendar.component(.month, from: date)
             weekOfMonth = calendar.component(.weekOfMonth, from: date)
@@ -57,7 +57,7 @@ extension CalendarX {
         }
 
         public func date() -> Date {
-            let calendar = CalendarX.current
+            let calendar = CalendarX.gregorian
             return calendar.date(Ofyear: year, month: month, day: day)!
         }
         
@@ -68,7 +68,7 @@ extension CalendarX {
                 year: yearDiff, month: monthsDiff
             )
             
-            let calendar = CalendarX.current
+            let calendar = CalendarX.gregorian
             let date = calendar.date(
                 byAdding: dateComponents,
                 to: date()
@@ -86,7 +86,7 @@ extension CalendarX {
 extension DateInterval {
     public init(day: CalendarX.Day) {
         let date = day.date()
-        let startOfDate = CalendarX.current.startOfDay(for: date)
+        let startOfDate = CalendarX.gregorian.startOfDay(for: date)
         self = .init(start: startOfDate, duration: 3600 * 24)
     }
 }
