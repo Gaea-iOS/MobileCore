@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LunarDateFormatter {
+public enum LunarDateFormatter {
     private static let chineseMonths = ["正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"]
     
     private static let chineseDays = [
@@ -17,28 +17,8 @@ enum LunarDateFormatter {
     ]
     
     private static let calendar = Calendar(identifier: .chinese)
-    
-    enum Format {
-        case full
-        case year
-        case month
-        case day
-    }
-    
-    static func format(day: CalendarX.Day, format: Format = .full) -> String {
-        switch format {
-        case .full:
-            formatFull(date: day.date())
-        case .year:
-            formatYear(date: day.date())
-        case .month:
-            formatMonth(date: day.date())
-        case .day:
-            formatDay(date: day.date())
-        }
-    }
 
-    private static func formatFull(date: Date) -> String {
+    public static func formatFull(date: Date) -> String {
         let yearString = formatYear(date: date)
         let monthString = formatMonth(date: date)
         let dayString = formatDay(date: date)
@@ -46,7 +26,7 @@ enum LunarDateFormatter {
         return "\(yearString)\(monthString)\(dayString)"
     }
     
-    private static func formatYear(date: Date) -> String {
+    public static func formatYear(date: Date) -> String {
         let yearFormatter = DateFormatter()
         yearFormatter.calendar = calendar
         yearFormatter.locale = Locale(identifier: "zh_CN")
@@ -70,7 +50,7 @@ enum LunarDateFormatter {
         return yearString
     }
     
-    private static func formatMonth(date: Date) -> String {
+    public static func formatMonth(date: Date) -> String {
         let month = calendar.component(.month, from: date)
         let isLeapMonth = calendar.component(.isLeapMonth, from: date) != 0
         
@@ -81,7 +61,7 @@ enum LunarDateFormatter {
         return monthString
     }
     
-    private static func formatDay(date: Date) -> String {
+    public static func formatDay(date: Date) -> String {
         let day = calendar.component(.day, from: date)
         let dayString = chineseDays[day - 1]
         return dayString
