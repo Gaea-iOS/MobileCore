@@ -16,12 +16,10 @@ let package = Package(
             targets: ["MobileCore"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-//        .package(
-//          url: "https://github.com/apple/swift-collections.git",
-//          .upToNextMinor(from: "1.1.0") // or `.upToNextMajor
-//        )
+        .package(
+            url: "https://github.com/apple/swift-collections.git",
+                .upToNextMinor(from: "1.2.1")
+        )
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -29,7 +27,7 @@ let package = Package(
         .target(
             name: "MobileCore",
             dependencies: [
-//                .product(name: "Collections", package: "swift-collections")
+                .product(name: "Collections", package: "swift-collections")
             ]),
         .testTarget(
             name: "MobileCoreTests",

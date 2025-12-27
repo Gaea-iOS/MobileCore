@@ -3,16 +3,17 @@
 // Created by Jerry X T Wang on 2023/7/6.
 
 import Foundation
+import Collections
 
 extension Calendar {
-    public func datesInSameMonth(with date: Date) -> [Date] {
+    public func datesInSameMonth(with date: Date) -> OrderedSet<Date> {
         let year = component(.year, from: date)
         let month = component(.month, from: date)
         
         return datesInMonth(month, year: year)
     }
     
-    func datesInMonth(_ month: Int, year: Int) -> [Date] {
+    func datesInMonth(_ month: Int, year: Int) -> OrderedSet<Date> {
         var components = DateComponents()
         components.year = year
         components.month = month
@@ -24,7 +25,7 @@ extension Calendar {
             return []
         }
 
-        var dates: [Date] = []
+        var dates: OrderedSet<Date> = []
         var date = startDate
         while date <= endDate {
             dates.append(date)
@@ -34,7 +35,7 @@ extension Calendar {
         return dates
     }
     
-    func datesInWeekOfMonth(_ weekOfMonth: Int, month: Int, year: Int) -> [Date] {
+    func datesInWeekOfMonth(_ weekOfMonth: Int, month: Int, year: Int) -> OrderedSet<Date> {
         var dateComponents = DateComponents()
         dateComponents.year = year
         dateComponents.month = month
@@ -47,7 +48,7 @@ extension Calendar {
         
         let lastDayOfWeek = date(byAdding: .day, value: 6, to: firstDayOfWeek)!
         
-        var dates = [Date]()
+        var dates: OrderedSet<Date> = []
         var currentDate = firstDayOfWeek
         while currentDate <= lastDayOfWeek {
             dates.append(currentDate)
@@ -86,7 +87,7 @@ extension Calendar {
 }
 
 extension Calendar {
-    func pastNMonths(_ nMonths: Int, fromDate: Date) -> [CalendarX.Month] {
+    func pastNMonths(_ nMonths: Int, fromDate: Date) -> OrderedSet<CalendarX.Month> {
         let result: [CalendarX.Month] = (0 ..< nMonths).reversed()
             .map { monthOffset in
                 let targetDate = date(byAdding: .month, value: -monthOffset, to: fromDate)!
@@ -96,6 +97,6 @@ extension Calendar {
                 return .init(year: year, month: month)
             }
 
-        return result
+        return .init(result) 
     }
 }

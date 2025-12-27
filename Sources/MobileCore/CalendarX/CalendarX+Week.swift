@@ -3,28 +3,22 @@
 // Created by Jerry X T Wang on 2023/7/6.
 
 import Foundation
+import Collections
 
 extension CalendarX {
     public struct Week: Hashable, Equatable, Sendable, Codable {
         public let year: Int
         public let month: Int
         public let weekOfMonth: Int
-        public let days: [Day]
+        
+        public func days() -> OrderedSet<Day> {
+            Week.daysInWeekOfMonth(weekOfMonth, month: month, year: year)
+        }
         
         public init(year: Int, month: Int, weekOfMonth: Int) {
             self.year = year
             self.month = month
             self.weekOfMonth = weekOfMonth
-            
-            let calendar = CalendarX.gregorian
-            
-            let dates = calendar.datesInWeekOfMonth(
-                weekOfMonth,
-                month: month,
-                year: year
-            )
-            
-            self.days = dates.map(CalendarX.Day.init(date:))
         }
     }
 }
@@ -34,7 +28,7 @@ private extension CalendarX.Week {
         _ weekOfMonth: Int,
         month: Int,
         year: Int
-    ) -> [CalendarX.Day] {
+    ) -> OrderedSet<CalendarX.Day> {
         let calendar = CalendarX.gregorian
         let dates = calendar.datesInWeekOfMonth(
             weekOfMonth,
@@ -42,7 +36,7 @@ private extension CalendarX.Week {
             year: year
         )
         let days = dates.map(CalendarX.Day.init(date:))
-        return days
+        return .init(days)
     }
 }
 
