@@ -12,6 +12,12 @@ extension CalendarX {
         public let weekOfMonth: Int
         public let weekday: Int
         
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(year)
+            hasher.combine(month)
+            hasher.combine(day)
+        }
+        
         public static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.year == rhs.year
             && lhs.month == rhs.month

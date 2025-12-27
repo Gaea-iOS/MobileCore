@@ -11,6 +11,10 @@ extension CalendarX {
 
         public let months: OrderedSet<Month>
         
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(year)
+        }
+        
         public static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.year == rhs.year
         }
