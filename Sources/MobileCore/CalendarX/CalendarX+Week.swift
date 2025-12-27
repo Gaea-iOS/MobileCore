@@ -11,7 +11,9 @@ extension CalendarX {
         public let month: Int
         public let weekOfMonth: Int
         
-        public let days: OrderedSet<Day>
+        public func days() -> OrderedSet<Day> {
+            Week.daysInWeekOfMonth(weekOfMonth, month: month, year: year)
+        }
         
         public func hash(into hasher: inout Hasher) {
             hasher.combine(year)
@@ -29,8 +31,6 @@ extension CalendarX {
             self.year = year
             self.month = month
             self.weekOfMonth = weekOfMonth
-            
-            days = Week.daysInWeekOfMonth(weekOfMonth, month: month, year: year)
         }
     }
 }

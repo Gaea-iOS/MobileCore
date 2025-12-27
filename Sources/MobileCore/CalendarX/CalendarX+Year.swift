@@ -9,7 +9,9 @@ extension CalendarX {
     public struct Year: Hashable, Equatable, Sendable, Codable {
         public let year: Int
 
-        public let months: OrderedSet<Month>
+        public func months() -> OrderedSet<Month> {
+            Year.monthsInYear(year)
+        }
         
         public func hash(into hasher: inout Hasher) {
             hasher.combine(year)
@@ -27,7 +29,6 @@ extension CalendarX {
 
         public init(year: Int) {
             self.year = year
-            months = Year.monthsInYear(year)
         }
     }
 }
