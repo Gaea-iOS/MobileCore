@@ -11,14 +11,14 @@ extension CalendarX {
         public let month: Int
         public let weekOfMonth: Int
         
-        public func days() -> OrderedSet<Day> {
-            Week.daysInWeekOfMonth(weekOfMonth, month: month, year: year)
-        }
+        public let days: OrderedSet<Day>
         
         public init(year: Int, month: Int, weekOfMonth: Int) {
             self.year = year
             self.month = month
             self.weekOfMonth = weekOfMonth
+            
+            days = Week.daysInWeekOfMonth(weekOfMonth, month: month, year: year)
         }
     }
 }

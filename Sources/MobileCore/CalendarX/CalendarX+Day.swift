@@ -19,7 +19,7 @@ extension CalendarX {
         }
         
         public static var today: Self {
-            .init(date: Date())
+            .init(date: .now)
         }
         
         public init(year: Int, month: Int, day: Int) {
@@ -78,7 +78,7 @@ extension CalendarX {
         }
         
         public func dayWithSameWeekday(in week: CalendarX.Week) -> Self {
-            week.days().first { $0.weekday == weekday }!
+            week.days.first { $0.weekday == weekday }!
         }
     }
 }
