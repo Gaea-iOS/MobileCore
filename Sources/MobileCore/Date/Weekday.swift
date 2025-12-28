@@ -26,37 +26,37 @@ import Foundation
     }
     
     public func symbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.weekdaySymbols[rawValue - 1]
     }
 
     public func shortSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.shortWeekdaySymbols[rawValue - 1]
     }
 
     public func veryShortSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.veryShortWeekdaySymbols[rawValue - 1]
     }
     
     public func standaloneSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.standaloneWeekdaySymbols[rawValue - 1]
     }
     
     public func shortStandaloneSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.shortStandaloneWeekdaySymbols[rawValue - 1]
     }
     
     public func veryShortStandaloneSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.veryShortStandaloneWeekdaySymbols[rawValue - 1]
     }

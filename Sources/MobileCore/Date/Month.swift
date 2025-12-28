@@ -7,6 +7,10 @@
 
 import Foundation
 
+extension DateFormatter {
+    public static let `default`: DateFormatter = .init()
+}
+
 @frozen public enum Month: Int, Equatable, Hashable, Comparable, Codable, CaseIterable, Identifiable {
     case january = 1
     case february
@@ -30,31 +34,31 @@ import Foundation
     }
 
     public func shortSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.shortMonthSymbols[rawValue - 1]
     }
 
     public func veryShortSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.veryShortMonthSymbols[rawValue - 1]
     }
     
     public func standaloneSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.standaloneMonthSymbols[rawValue - 1]
     }
     
     public func shortStandaloneSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.shortStandaloneMonthSymbols[rawValue - 1]
     }
     
     public func veryShortStandaloneSymbol(
-        dateFormatter: DateFormatter = .init()
+        dateFormatter: DateFormatter = .default
     ) -> String {
         dateFormatter.veryShortStandaloneMonthSymbols[rawValue - 1]
     }
