@@ -17,6 +17,14 @@ public enum LunarDateFormatter {
     ]
     
     private static let calendar = Calendar(identifier: .chinese)
+    
+    private static let yearFormatter: DateFormatter = {
+        let yearFormatter = DateFormatter()
+        yearFormatter.calendar = LunarDateFormatter.calendar
+        yearFormatter.locale = Locale(identifier: "zh_CN")
+        yearFormatter.dateStyle = .full // 关键：全格式包含干支
+        return yearFormatter
+    }()
 
     public static func formatFull(date: Date) -> String {
         let yearString = formatYear(date: date)
@@ -27,10 +35,6 @@ public enum LunarDateFormatter {
     }
     
     public static func formatYear(date: Date) -> String {
-        let yearFormatter = DateFormatter()
-        yearFormatter.calendar = calendar
-        yearFormatter.locale = Locale(identifier: "zh_CN")
-        yearFormatter.dateStyle = .full // 关键：全格式包含干支
         let fullString = yearFormatter.string(from: date) // 类似 "2025年乙巳年冬月廿二"
 
         // 从全字符串中提取干支部分（正则匹配两个汉字加“年”）

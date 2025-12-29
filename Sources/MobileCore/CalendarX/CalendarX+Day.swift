@@ -9,8 +9,18 @@ extension CalendarX {
         public let year: Int
         public let month: Int
         public let day: Int
-        public let weekOfMonth: Int
-        public let weekday: Int
+        
+        public var weekOfMonth: Int {
+            let calendar = CalendarX.gregorian
+            let date = calendar.date(Ofyear: year, month: month, day: day)!
+            return calendar.component(.weekOfMonth, from: date)
+        }
+        
+        public var weekday: Int {
+            let calendar = CalendarX.gregorian
+            let date = calendar.date(Ofyear: year, month: month, day: day)!
+            return calendar.component(.weekday, from: date)
+        }
         
         public func hash(into hasher: inout Hasher) {
             hasher.combine(year)
@@ -29,27 +39,8 @@ extension CalendarX {
         }
         
         public init(year: Int, month: Int, day: Int) {
-            var components: DateComponents = .init()
-            components.year = year
-            components.month = month
-            components.day = day
-            
-            let calendar = CalendarX.gregorian
-            let date = calendar.date(from: components)!
-            self.init(date: date)
-        }
-
-        private init(
-            year: Int,
-            month: Int,
-            weekOfMonth: Int,
-            weekday: Int,
-            day: Int
-        ) {
             self.year = year
             self.month = month
-            self.weekOfMonth = weekOfMonth
-            self.weekday = weekday
             self.day = day
         }
 
@@ -57,8 +48,6 @@ extension CalendarX {
             let calendar = CalendarX.gregorian
             year = calendar.component(.year, from: date)
             month = calendar.component(.month, from: date)
-            weekOfMonth = calendar.component(.weekOfMonth, from: date)
-            weekday = calendar.component(.weekday, from: date)
             day = calendar.component(.day, from: date)
         }
 
