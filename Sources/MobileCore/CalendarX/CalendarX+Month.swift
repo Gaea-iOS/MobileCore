@@ -6,30 +6,11 @@ import Foundation
 import Collections
 
 extension CalendarX {
-    public struct Month: Hashable, Equatable, Sendable, Codable {
+    public struct Month: Sendable, Codable {
         public let year: Int
         public let month: Int
         
-        public func weeks() -> OrderedSet<Week> {
-            Month.weeksInMonth(month, year: year)
-        }
-        
-        public func days() -> OrderedSet<Day> {
-            Month.daysInMonth(month, year: year)
-        }
-        
-        public func hash(into hasher: inout Hasher) {
-            hasher.combine(year)
-            hasher.combine(month)
-        }
-        
-        public static func == (lhs: Self, rhs: Self) -> Bool {
-            lhs.year == rhs.year
-            && lhs.month == rhs.month
-        }
-        
-        public static var current: Self {
-            let calendar: Calendar = CalendarX.shared.gregorian
+        public static func current(in calendar: Calendar) -> Self {
             let date: Date = .now
             let year = calendar.component(.year, from: date)
             let month = calendar.component(.month, from: date)
@@ -56,38 +37,34 @@ extension CalendarX {
                 return .init(year: year, month: month - 1)
             }
         }
-    }
-}
-
-private extension CalendarX.Month {
-    static func weeksInMonth(_ month: Int, year: Int) -> OrderedSet<CalendarX.Week> {
-        let calendar = CalendarX.shared.gregorian
-        let numberOfWeeks = calendar.numberOfWeeksInMonth(month, year: year)!
-        let weeks: [CalendarX.Week] = (1 ... numberOfWeeks).map {
-            .init(year: year, month: month, weekOfMonth: $0)
+        
+        public func weeks(in calendar: Calendar) -> OrderedSet<CalendarX.Week> {
+            return calendar.weeksInMonth(month, year: year)
         }
-        return .init(weeks)
-    }
-    
-    static func daysInMonth(_ month: Int, year: Int) -> OrderedSet<CalendarX.Day> {
-        let calendar = CalendarX.shared.gregorian
-        let dates = calendar
-            .datesInMonth(month, year: year)
-        let days = dates.map(CalendarX.Day.init(date:))
-        return .init(days)
+        
+        public func days(in calendar: Calendar) -> OrderedSet<CalendarX.Day> {
+            return calendar.daysInMonth(month, year: year)
+        }
     }
 }
 
-public extension CalendarX.Month {
-    init(day: CalendarX.Day) {
-        self = .init(year: day.year, month: day.month)
+extension CalendarX.Month: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(year)
+        hasher.combine(month)
     }
 }
 
+extension CalendarX.Month: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.year == rhs.year
+        && lhs.month == rhs.month
+    }
+}
 
-//extension CalendarX.Month: Comparable {
-//    public static func < (lhs: Self, rhs: Self) -> Bool {
-//        lhs.year < rhs.year
-//            || (lhs.year == rhs.year && lhs.month < rhs.month)
-//    }
-//}
+extension CalendarX.Month: Comparable {
+    public static func < (lhs: CalendarX.Month, rhs: CalendarX.Month) -> Bool {
+        lhs.year < rhs.year
+        || (lhs.year == rhs.year && lhs.month < rhs.month)
+    }
+}

@@ -6,44 +6,42 @@ import Foundation
 import Collections
 
 extension CalendarX {
-    public struct Year: Hashable, Equatable, Sendable, Codable {
+    public struct Year: Sendable, Codable {
         public let year: Int
-
-        public func months() -> OrderedSet<Month> {
-            Year.monthsInYear(year)
-        }
         
-        public func hash(into hasher: inout Hasher) {
-            hasher.combine(year)
-        }
-        
-        public static func == (lhs: Self, rhs: Self) -> Bool {
-            lhs.year == rhs.year
-        }
-        
-        public static var current: Self {
-            let calendar: Calendar = CalendarX.shared.gregorian
-            let year = calendar.component(.year, from: .now)
+        public static func current(in calendar: Calendar) -> Self {
+            let components = calendar.dateComponents([.year], from: .now)
+            let year = components.year!
             return .init(year: year)
         }
 
         public init(year: Int) {
             self.year = year
         }
-    }
-}
-
-private extension CalendarX.Year {
-    private static func monthsInYear(_ year: Int) -> OrderedSet<CalendarX.Month> {
-        let months: [CalendarX.Month] = (1 ... 12).map {
-            .init(year: year, month: $0)
+        
+        public func months() -> OrderedSet<CalendarX.Month> {
+            let months: [CalendarX.Month] = (1 ... 12).map {
+                .init(year: year, month: $0)
+            }
+            return .init(months)
         }
-        return .init(months)
     }
 }
 
-//extension CalendarX.Year: Comparable {
-//    public static func < (lhs: Self, rhs: Self) -> Bool {
-//        lhs.year < rhs.year
-//    }
-//}
+extension CalendarX.Year: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(year)
+    }
+}
+
+extension CalendarX.Year: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.year == rhs.year
+    }
+}
+
+extension CalendarX.Year: Comparable {
+    public static func < (lhs: CalendarX.Year, rhs: CalendarX.Year) -> Bool {
+        lhs.year < rhs.year
+    }
+}

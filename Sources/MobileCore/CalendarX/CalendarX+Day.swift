@@ -5,37 +5,13 @@
 import Foundation
 
 extension CalendarX {
-    public struct Day: Hashable, Equatable, Sendable, Codable {
+    public struct Day: Sendable, Codable {
         public let year: Int
         public let month: Int
         public let day: Int
         
-        public var weekOfMonth: Int {
-            let calendar = CalendarX.shared.gregorian
-            let date = calendar.date(Ofyear: year, month: month, day: day)!
-            return calendar.component(.weekOfMonth, from: date)
-        }
-        
-        public var weekday: Int {
-            let calendar = CalendarX.shared.gregorian
-            let date = calendar.date(Ofyear: year, month: month, day: day)!
-            return calendar.component(.weekday, from: date)
-        }
-        
-        public func hash(into hasher: inout Hasher) {
-            hasher.combine(year)
-            hasher.combine(month)
-            hasher.combine(day)
-        }
-        
-        public static func == (lhs: Self, rhs: Self) -> Bool {
-            lhs.year == rhs.year
-            && lhs.month == rhs.month
-            && lhs.day == rhs.day
-        }
-        
-        public static var today: Self {
-            .init(date: .now)
+        public static func today(in calendar: Calendar) -> Self {
+            .init(date: .now, in: calendar)
         }
         
         public init(year: Int, month: Int, day: Int) {
@@ -44,53 +20,45 @@ extension CalendarX {
             self.day = day
         }
 
-        public init(date: Date) {
-            let calendar = CalendarX.shared.gregorian
+        public init(date: Date, in calendar: Calendar) {
             year = calendar.component(.year, from: date)
             month = calendar.component(.month, from: date)
             day = calendar.component(.day, from: date)
         }
 
-        public func date() -> Date {
-            let calendar = CalendarX.shared.gregorian
+        public func date(in calendar: Calendar) -> Date {
             return calendar.date(Ofyear: year, month: month, day: day)!
         }
         
-        public func dayWithSameday(in month: CalendarX.Month) -> Self {
-            let yearDiff = month.year - self.year
-            let monthsDiff = month.month - self.month
-            let dateComponents: DateComponents = .init(
-                year: yearDiff, month: monthsDiff
-            )
-            
-            let calendar = CalendarX.shared.gregorian
-            let date = calendar.date(
-                byAdding: dateComponents,
-                to: date()
-            )!
-            
-            return .init(date: date)
-        }
-        
-        public func dayWithSameWeekday(in week: CalendarX.Week) -> Self {
-            week.days().first { $0.weekday == weekday }!
+        public func weekday(in calendar: Calendar) -> Int {
+            let date = date(in: calendar)
+            let components = calendar.dateComponents([.weekday], from: date)
+            let weekday = components.weekday!
+            return weekday
         }
     }
 }
 
-extension DateInterval {
-    public init(day: CalendarX.Day) {
-        let date = day.date()
-        let startOfDate = CalendarX.shared.gregorian.startOfDay(for: date)
-        self = .init(start: startOfDate, duration: 3600 * 24)
+extension CalendarX.Day: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(year)
+        hasher.combine(month)
+        hasher.combine(day)
+    }
+}
+
+extension CalendarX.Day: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.year == rhs.year
+        && lhs.month == rhs.month
+        && lhs.day == rhs.day
     }
 }
 
 extension CalendarX.Day: Comparable {
     public static func < (lhs: Self, rhs: Self) -> Bool {
         lhs.year < rhs.year
-            || (lhs.year == rhs.year && lhs.month < rhs.month)
-            || (lhs.year == rhs.year && lhs.month == rhs.month && lhs.day < rhs.day)
+        || (lhs.year == rhs.year && lhs.month < rhs.month)
+        || (lhs.year == rhs.year && lhs.month == rhs.month && lhs.day < rhs.day)
     }
 }
-

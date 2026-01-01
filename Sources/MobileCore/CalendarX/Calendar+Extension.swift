@@ -78,7 +78,7 @@ extension Calendar {
         dateComponents.year = year
         dateComponents.month = month
         dateComponents.day = day
-        if let date = self.date(from: dateComponents) {
+        if let date = date(from: dateComponents) {
             return date
         } else {
             return nil
@@ -98,5 +98,40 @@ extension Calendar {
             }
 
         return .init(result) 
+    }
+}
+
+
+extension Calendar {
+    func weeksInMonth(_ month: Int, year: Int) -> OrderedSet<CalendarX.Week> {
+        let numberOfWeeks = numberOfWeeksInMonth(month, year: year)!
+        let weeks: [CalendarX.Week] = (1 ... numberOfWeeks).map {
+            .init(year: year, month: month, weekOfMonth: $0)
+        }
+        return .init(weeks)
+    }
+        
+    func daysInMonth(_ month: Int, year: Int) -> OrderedSet<CalendarX.Day> {
+        let dates = datesInMonth(month, year: year)
+        let days = dates.map { CalendarX.Day(date: $0, in: self) }
+        return .init(days)
+    }
+}
+
+extension Calendar {
+    func daysInWeekOfMonth(
+        _ weekOfMonth: Int,
+        month: Int,
+        year: Int
+    ) -> OrderedSet<CalendarX.Day> {
+        let dates = datesInWeekOfMonth(
+            weekOfMonth,
+            month: month,
+            year: year
+        )
+        let days = dates.map { date in
+            CalendarX.Day(date: date, in: self)
+        }
+        return .init(days)
     }
 }

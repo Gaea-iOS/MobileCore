@@ -4,9 +4,4 @@
 
 import Foundation
 
-public struct CalendarX: Sendable{
-    public static let shared: CalendarX = .init()
-    private init() {}
-    
-    public var gregorian: Calendar = .init(identifier: .gregorian)
-}
+public enum CalendarX {}

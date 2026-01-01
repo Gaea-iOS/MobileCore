@@ -6,63 +6,43 @@ import Foundation
 import Collections
 
 extension CalendarX {
-    public struct Week: Hashable, Equatable, Sendable, Codable {
+    public struct Week: Sendable, Codable {
         public let year: Int
         public let month: Int
         public let weekOfMonth: Int
-        
-        public func days() -> OrderedSet<Day> {
-            Week.daysInWeekOfMonth(weekOfMonth, month: month, year: year)
-        }
-        
-        public func hash(into hasher: inout Hasher) {
-            hasher.combine(year)
-            hasher.combine(month)
-            hasher.combine(weekOfMonth)
-        }
-        
-        public static func == (lhs: Self, rhs: Self) -> Bool {
-            lhs.year == rhs.year
-            && lhs.month == rhs.month
-            && lhs.weekOfMonth == rhs.weekOfMonth
-        }
-        
+
         public init(year: Int, month: Int, weekOfMonth: Int) {
             self.year = year
             self.month = month
             self.weekOfMonth = weekOfMonth
         }
+        
+        public func days(in calendar: Calendar) -> OrderedSet<CalendarX.Day> {
+            calendar.daysInWeekOfMonth(weekOfMonth, month: month, year: year)
+        }
     }
 }
 
-private extension CalendarX.Week {
-    static func daysInWeekOfMonth(
-        _ weekOfMonth: Int,
-        month: Int,
-        year: Int
-    ) -> OrderedSet<CalendarX.Day> {
-        let calendar = CalendarX.shared.gregorian
-        let dates = calendar.datesInWeekOfMonth(
-            weekOfMonth,
-            month: month,
-            year: year
-        )
-        let days = dates.map(CalendarX.Day.init(date:))
-        return .init(days)
+extension CalendarX.Week: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(year)
+        hasher.combine(month)
+        hasher.combine(weekOfMonth)
     }
 }
 
-public extension CalendarX.Week {
-    init(day: CalendarX.Day) {
-        self = .init(year: day.year, month: day.month, weekOfMonth: day.weekOfMonth)
+extension CalendarX.Week: Equatable {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.year == rhs.year
+        && lhs.month == rhs.month
+        && lhs.weekOfMonth == rhs.weekOfMonth
     }
 }
 
-//extension CalendarX.Week: Comparable {
-//    public static func < (lhs: Self, rhs: Self) -> Bool {
-//        lhs.year < rhs.year
-//            || (lhs.year == rhs.year && lhs.month < rhs.month)
-//            || (lhs.year == rhs.year && lhs.month == rhs.month && lhs.weekOfMonth < rhs.weekOfMonth)
-//    }
-//}
-
+extension CalendarX.Week: Comparable {
+    public static func < (lhs: CalendarX.Week, rhs: CalendarX.Week) -> Bool {
+        lhs.year < rhs.year
+        || (lhs.year == rhs.year && lhs.month < rhs.month)
+        || (lhs.year == rhs.year && lhs.month == rhs.month && lhs.weekOfMonth < rhs.weekOfMonth)
+    }
+}
