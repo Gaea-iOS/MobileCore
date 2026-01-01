@@ -70,4 +70,8 @@ public enum LunarDateFormatter {
         let dayString = chineseDays[day - 1]
         return dayString
     }
+    
+    public static func formatDay(day: CalendarX.Day) -> String {
+        chineseDays[day.day - 1]
+    }
 }
