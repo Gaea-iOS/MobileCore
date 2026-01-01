@@ -55,8 +55,9 @@ public enum LunarDateFormatter {
     }
     
     public static func formatMonth(date: Date) -> String {
-        let month = calendar.component(.month, from: date)
-        let isLeapMonth = calendar.component(.isLeapMonth, from: date) != 0
+        let components = calendar.dateComponents([.month, .isLeapMonth], from: date)
+        let month = components.month!
+        let isLeapMonth = components.isLeapMonth!
         
         var monthString = chineseMonths[month - 1]
         if isLeapMonth {
@@ -66,7 +67,8 @@ public enum LunarDateFormatter {
     }
     
     public static func formatDay(date: Date) -> String {
-        let day = calendar.component(.day, from: date)
+        let components = calendar.dateComponents([.day], from: date)
+        let day = components.day!
         let dayString = chineseDays[day - 1]
         return dayString
     }
