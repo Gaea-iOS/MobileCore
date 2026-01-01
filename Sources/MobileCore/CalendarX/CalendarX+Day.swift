@@ -5,19 +5,19 @@
 import Foundation
 
 extension CalendarX {
-    public  struct Day: Hashable, Equatable, Sendable, Codable {
+    public struct Day: Hashable, Equatable, Sendable, Codable {
         public let year: Int
         public let month: Int
         public let day: Int
         
         public var weekOfMonth: Int {
-            let calendar = CalendarX.gregorian
+            let calendar = CalendarX.shared.gregorian
             let date = calendar.date(Ofyear: year, month: month, day: day)!
             return calendar.component(.weekOfMonth, from: date)
         }
         
         public var weekday: Int {
-            let calendar = CalendarX.gregorian
+            let calendar = CalendarX.shared.gregorian
             let date = calendar.date(Ofyear: year, month: month, day: day)!
             return calendar.component(.weekday, from: date)
         }
@@ -45,14 +45,14 @@ extension CalendarX {
         }
 
         public init(date: Date) {
-            let calendar = CalendarX.gregorian
+            let calendar = CalendarX.shared.gregorian
             year = calendar.component(.year, from: date)
             month = calendar.component(.month, from: date)
             day = calendar.component(.day, from: date)
         }
 
         public func date() -> Date {
-            let calendar = CalendarX.gregorian
+            let calendar = CalendarX.shared.gregorian
             return calendar.date(Ofyear: year, month: month, day: day)!
         }
         
@@ -63,7 +63,7 @@ extension CalendarX {
                 year: yearDiff, month: monthsDiff
             )
             
-            let calendar = CalendarX.gregorian
+            let calendar = CalendarX.shared.gregorian
             let date = calendar.date(
                 byAdding: dateComponents,
                 to: date()
@@ -81,7 +81,7 @@ extension CalendarX {
 extension DateInterval {
     public init(day: CalendarX.Day) {
         let date = day.date()
-        let startOfDate = CalendarX.gregorian.startOfDay(for: date)
+        let startOfDate = CalendarX.shared.gregorian.startOfDay(for: date)
         self = .init(start: startOfDate, duration: 3600 * 24)
     }
 }

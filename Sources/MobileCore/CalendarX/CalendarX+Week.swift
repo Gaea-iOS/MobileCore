@@ -41,7 +41,7 @@ private extension CalendarX.Week {
         month: Int,
         year: Int
     ) -> OrderedSet<CalendarX.Day> {
-        let calendar = CalendarX.gregorian
+        let calendar = CalendarX.shared.gregorian
         let dates = calendar.datesInWeekOfMonth(
             weekOfMonth,
             month: month,

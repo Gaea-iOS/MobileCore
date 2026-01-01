@@ -4,6 +4,9 @@
 
 import Foundation
 
-public struct CalendarX {
-    public static let gregorian: Calendar = .init(identifier: .gregorian)
+public struct CalendarX: Sendable{
+    static let shared: CalendarX = .init()
+    private init() {}
+    
+    public var gregorian: Calendar = .init(identifier: .gregorian)
 }

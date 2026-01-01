@@ -22,7 +22,7 @@ extension CalendarX {
         }
         
         public static var current: Self {
-            let calendar: Calendar = CalendarX.gregorian
+            let calendar: Calendar = CalendarX.shared.gregorian
             let year = calendar.component(.year, from: .now)
             return .init(year: year)
         }

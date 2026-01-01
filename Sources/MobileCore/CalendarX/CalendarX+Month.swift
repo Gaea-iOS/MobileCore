@@ -29,7 +29,7 @@ extension CalendarX {
         }
         
         public static var current: Self {
-            let calendar: Calendar = CalendarX.gregorian
+            let calendar: Calendar = CalendarX.shared.gregorian
             let date: Date = .now
             let year = calendar.component(.year, from: date)
             let month = calendar.component(.month, from: date)
@@ -61,7 +61,7 @@ extension CalendarX {
 
 private extension CalendarX.Month {
     static func weeksInMonth(_ month: Int, year: Int) -> OrderedSet<CalendarX.Week> {
-        let calendar = CalendarX.gregorian
+        let calendar = CalendarX.shared.gregorian
         let numberOfWeeks = calendar.numberOfWeeksInMonth(month, year: year)!
         let weeks: [CalendarX.Week] = (1 ... numberOfWeeks).map {
             .init(year: year, month: month, weekOfMonth: $0)
@@ -70,7 +70,7 @@ private extension CalendarX.Month {
     }
     
     static func daysInMonth(_ month: Int, year: Int) -> OrderedSet<CalendarX.Day> {
-        let calendar = CalendarX.gregorian
+        let calendar = CalendarX.shared.gregorian
         let dates = calendar
             .datesInMonth(month, year: year)
         let days = dates.map(CalendarX.Day.init(date:))
