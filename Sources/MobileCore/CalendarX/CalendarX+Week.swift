@@ -3,7 +3,7 @@
 // Created by Jerry X T Wang on 2023/7/6.
 
 import Foundation
-import Collections
+import OrderedCollections
 
 extension CalendarX {
     public struct Week: Sendable, Codable {

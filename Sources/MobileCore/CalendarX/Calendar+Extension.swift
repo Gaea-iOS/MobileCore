@@ -1,9 +1,6 @@
-// Calendar+Extension.swift
-// Copyright (c) 2023 Nostudio
-// Created by Jerry X T Wang on 2023/7/6.
 
 import Foundation
-import Collections
+import OrderedCollections
 
 extension Calendar {
     public func datesInSameMonth(with date: Date) -> OrderedSet<Date> {
