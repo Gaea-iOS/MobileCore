@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-collections.git",
-                .upToNextMinor(from: "1.4.1")
+            from: "1.4.1"
         )
     ],
     targets: [
