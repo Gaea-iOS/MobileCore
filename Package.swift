@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "MobileCore",
     platforms: [
-      .iOS(.v17),
+      .iOS(.v16),
       .watchOS(.v6)
     ],
     products: [
